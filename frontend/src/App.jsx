@@ -1,5 +1,6 @@
 import './App.css'
 import JourneyTable from './components/JourneyTable'
+import StationTable from './components/StationTable'
 
 const rides = [
   {
@@ -36,12 +37,61 @@ const rides = [
     'Duration': 399
   }
 ]
+const stations = [
+  {
+    'FID': 1,
+    'Station_ID': '501',
+    'Name_FI': 'Hanasaari',
+    'Name_SE': 'Hanaholmen',
+    'Name_EN': "Hanasaari",
+    'Address_FI': 'Hanasaarenranta 1',
+    'Address_SE': "Hanaholmsstranden 1",
+    'City_FI': 'Espoo',
+    'City_SE': 'Esbo',
+    'Operator': 'CityBike Finland',
+    'Capacity': 10,
+    'Coord_x': 24.840319,
+    'Coord_y': 60.16582
+  },
+  {
+
+    'FID': 2,
+    'Station_ID': '503',
+    'Name_FI': 'Keilalahti',
+    'Name_SE': 'Kägelviken',
+    'Name_EN': "Keilalahti",
+    'Address_FI': 'Keilalahdentie 2',
+    'Address_SE': "Kägelviksvägen 2",
+    'City_FI': 'Espoo',
+    'City_SE': 'Esbo',
+    'Operator': 'CityBike Finland',
+    'Capacity': 28,
+    'Coord_x': 24.827467,
+    'Coord_y': 60.171524
+  },
+  {
+    'FID': 3,
+    'Station_ID': '505',
+    'Name_FI': 'Westendinasema',
+    'Name_SE': 'Westendstationen',
+    'Name_EN': "Westendinasema",
+    'Address_FI': 'Westendintie 1',
+    'Address_SE': "Westendvägen 1",
+    'City_FI': 'Espoo',
+    'City_SE': 'Esbo',
+    'Operator': 'CityBike Finland',
+    'Capacity': 16,
+    'Coord_x': 24.805758,
+    'Coord_y': 60.168266
+  }
+]
 
 const App = () => {
 
   return (
     <>
       <JourneyTable rides={rides} />
+      <StationTable stations={stations} />
     </>
   )
 }
