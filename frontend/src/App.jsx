@@ -1,6 +1,9 @@
 import './App.css'
+import Layout from './components/Layout'
+import Home from './components/Home'
 import JourneyTable from './components/JourneyTable'
 import StationTable from './components/StationTable'
+import { Routes, Route } from 'react-router-dom'
 
 const rides = [
   {
@@ -90,8 +93,13 @@ const App = () => {
 
   return (
     <>
-      <JourneyTable rides={rides} />
-      <StationTable stations={stations} />
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path='/' element={<Home />} />
+          <Route path='/journeys' element={<JourneyTable rides={rides} />} />
+          <Route path='/stations' element={<StationTable stations={stations} />} />
+        </Route>
+      </Routes>
     </>
   )
 }
