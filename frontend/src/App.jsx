@@ -3,6 +3,7 @@ import Layout from './components/Layout'
 import Home from './components/Home'
 import JourneyTable from './components/JourneyTable'
 import StationTable from './components/StationTable'
+import SingleStation from './components/SingleStation'
 import { Routes, Route } from 'react-router-dom'
 
 const rides = [
@@ -98,6 +99,7 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path='/journeys' element={<JourneyTable rides={rides} />} />
           <Route path='/stations' element={<StationTable stations={stations} />} />
+          <Route path='/stations/:id' element={<SingleStation />} />
         </Route>
       </Routes>
     </>

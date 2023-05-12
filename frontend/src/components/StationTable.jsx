@@ -1,33 +1,36 @@
-const StationTable = ({ stations }) => {
+import { useNavigate } from "react-router-dom"
 
-    const stationsMap = stations.map((stations) => {
-      return (
-        <tr key={stations.Station_ID}>
-          <td>{stations.Station_ID}</td>
-          <td>{stations.Name_FI}</td>
-          <td>{stations.Address_FI}</td>
-          <td>{stations.City_FI}</td>
-          <td>{stations.Capacity}</td>
-        </tr>
-      )
-    })
-  
+const StationTable = ({ stations }) => {
+  const navigate = useNavigate()
+
+  const stationsMap = stations.map((station) => {
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>Capacity</th>
-          </tr>
-        </thead>
-        <tbody>
-          {stationsMap}
-        </tbody>
-      </table>
+      <tr key={station.Station_ID} onClick={() => navigate(`/stations/${station.Station_ID}`)}>
+        <td>{station.Station_ID}</td>
+        <td>{station.Name_FI}</td>
+        <td>{station.Address_FI}</td>
+        <td>{station.City_FI}</td>
+        <td>{station.Capacity}</td>
+      </tr>
     )
-  }
+  })
+
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>Capacity</th>
+        </tr>
+      </thead>
+      <tbody>
+        {stationsMap}
+      </tbody>
+    </table>
+  )
+}
 
 export default StationTable
