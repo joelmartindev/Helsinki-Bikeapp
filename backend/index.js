@@ -1,11 +1,13 @@
 const express = require('express')
 const db = require('./utils/dbConfig')
 const stationsRouter = require('./routes/stations')
+const cors = require('cors')
 const dotenv = require('dotenv')
 dotenv.config()
 
 const app = express()
 const port = 3000
+app.use(cors())
 app.use(express.json())
 
 app.get('/', (req, res) => {
