@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom"
 const StationTable = ({ stations }) => {
   const navigate = useNavigate()
 
+  if (stations === null) return <>Fetching data...</>
+
   const stationsMap = stations.map((station) => {
     return (
-      <tr key={station.Station_ID} onClick={() => navigate(`/stations/${station.Station_ID}`)}>
-        <td>{station.Station_ID}</td>
-        <td>{station.Name_FI}</td>
-        <td>{station.Address_FI}</td>
-        <td>{station.City_FI}</td>
-        <td>{station.Capacity}</td>
+      <tr key={station.id} onClick={() => navigate(`/stations/${station.id}`)}>
+        <td>{station.id}</td>
+        <td>{station.name_fi}</td>
+        <td>{station.address_fi}</td>
+        <td>{station.city_fi}</td>
+        <td>{station.capacity}</td>
       </tr>
     )
   })
