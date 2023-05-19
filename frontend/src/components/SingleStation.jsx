@@ -1,18 +1,23 @@
-import { useState } from "react"
+import { useContext } from "react"
 import { useParams } from "react-router-dom"
+import StationsContext from "./StationsContext"
 
 const SingleStation = () => {
-    const id = useParams()
-    const [station, setStation] = useState(null)
+    const id = Number(useParams('id').id)
+    const stations = useContext(StationsContext)
 
-    // Next fetch station data from database
+    if (stations === null) return <>Fetching data...</>
+
+    const station = stations.find(station => station.id === id)
+ 
+    if (station === undefined) return <>Station not found</>
 
     return (
         <>
-            <p>insert station.Name_FI</p>
-            <p>insert station.Address_FI</p>
-            <p>insert Total number of journeys starting from the station</p>
-            <p>insert Total number of journeys ending at the station</p>
+            <p>{station.name_fi}</p>
+            <p>{station.address_fi}</p>
+            <p>TODO Total number of journeys starting from the station</p>
+            <p>TODO Total number of journeys ending at the station</p>
         </>
     )
 }

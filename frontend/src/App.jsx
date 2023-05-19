@@ -7,6 +7,7 @@ import SingleStation from './components/SingleStation'
 import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import stationDB from './services/stationDB'
+import StationsContextLayout from './components/StationsContextLayout'
 
 const rides = [
   {
@@ -55,7 +56,7 @@ const App = () => {
     }
 
     fetchData()
-  },[])
+  }, [])
 
   return (
     <>
@@ -63,8 +64,10 @@ const App = () => {
         <Route element={<Layout />}>
           <Route path='/' element={<Home />} />
           <Route path='/journeys' element={<JourneyTable rides={rides} />} />
-          <Route path='/stations' element={<StationTable stations={stations} />} />
-          <Route path='/stations/:id' element={<SingleStation />} />
+          <Route element={<StationsContextLayout stations={stations} />}>
+            <Route path='/stations' element={<StationTable />} />
+            <Route path='/stations/:id' element={<SingleStation />} />
+          </Route>
         </Route>
       </Routes>
     </>

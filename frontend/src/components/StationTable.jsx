@@ -1,7 +1,10 @@
+import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
+import StationsContext from './StationsContext'
 
-const StationTable = ({ stations }) => {
+const StationTable = () => {
   const navigate = useNavigate()
+  const stations = useContext(StationsContext)
 
   if (stations === null) return <>Fetching data...</>
 
