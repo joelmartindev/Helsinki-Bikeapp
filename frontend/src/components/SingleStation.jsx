@@ -14,8 +14,8 @@ const SingleStation = () => {
             setTotalJourneys(res)
         }
 
-        if (id !== null) fetchData()
-    },[])
+        fetchData()
+    },[id])
 
     if (stations === null) return <>Fetching data...</>
 
