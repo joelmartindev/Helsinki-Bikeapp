@@ -1,6 +1,7 @@
 const express = require('express')
 const db = require('./utils/dbConfig')
 const stationsRouter = require('./routes/stations')
+const journeysRouter = require('./routes/journeys')
 const cors = require('cors')
 const dotenv = require('dotenv')
 dotenv.config()
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/stations', stationsRouter)
+app.use('/api/journeys', journeysRouter)
 
 app.listen(port, async () => {
   console.log(`Example app listening on port ${port}`)
