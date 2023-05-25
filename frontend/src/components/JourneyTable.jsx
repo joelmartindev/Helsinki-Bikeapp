@@ -1,45 +1,32 @@
 import { useState, useEffect } from "react";
 import db from "../services/journeyDB";
+import PageNavigation from "./PageNavigation";
+import { useSearchParams } from "react-router-dom";
+import formatJourneys from "../utils/journeyUtils";
 
-const JourneyTable = () => {
-  const [journeys, setJourneys] = useState(null);
+const JourneyTable = ({ journeys, setJourneys }) => {
+  const [search, setSearch] = useSearchParams();
 
-  const formatJourneys = (unformatted) => {
-    let formatted = [];
+  const updatePage = async () => {
+    //TODO clicking journeys menu button loads first page
+    //Get query parameters
+    let page = search.get("page");
+    console.log(journeys);
+    // If empty query
+    if (page == null) {
+      page = 2;
+    } else page++; //TODO only changes to next page right now
 
-    unformatted.map((journey) => {
-      formatted.push({
-        id: journey.id,
-        departure: journey.departure,
-        return: journey.return,
-        departure_station:
-          journey.departure_station_id + " - " + journey.departure_station_name,
-        return_station:
-          journey.return_station_id + " - " + journey.return_station_name,
-        covered_distance: journey.covered_distance / 1000 + "km",
-        duration: formatTime(journey.duration),
-      });
-    });
+    //Add query parameters to url
+    setSearch({ page });
 
-    return formatted;
+    //Fetch and set data
+    const res = await db.getPage(page);
+    const formatted = formatJourneys(res);
+    setJourneys(formatted);
   };
 
-  const formatTime = (s) => {
-    return (s - (s %= 60)) / 60 + (9 < s ? "m" : "m0") + s + "s";
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await db.getAll();
-      console.log(res);
-      const formatted = formatJourneys(res);
-      setJourneys(formatted);
-    };
-
-    fetchData();
-  }, []);
-
-  if (journeys === null) return <>Loading list...</>;
+  if (journeys === null) return <>Loading journeys... </>; //TODO Better loading screen
 
   const journeysMap = journeys.map((journey) => {
     return (
@@ -90,6 +77,7 @@ const JourneyTable = () => {
         </thead>
         <tbody>{journeysMap}</tbody>
       </table>
+      <PageNavigation updatePage={updatePage} />
     </div>
   );
 };

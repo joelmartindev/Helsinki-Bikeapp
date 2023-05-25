@@ -2,8 +2,8 @@
 let baseURL = "";
 if (import.meta.env.DEV) baseURL = import.meta.env.VITE_BASE_URL;
 
-const getAll = async () => {
-  const response = await fetch(`${baseURL}/api/stations`);
+const getPage = async (page) => {
+  const response = await fetch(`${baseURL}/api/stations?page=${page}`);
   const jsonData = await response.json();
   return jsonData;
 };
@@ -15,6 +15,6 @@ const getTotalJourneys = async (id) => {
 };
 
 export default {
-  getAll,
+  getPage,
   getTotalJourneys,
 };

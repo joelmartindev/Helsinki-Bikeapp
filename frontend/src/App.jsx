@@ -6,17 +6,31 @@ import StationTable from "./components/StationTable";
 import SingleStation from "./components/SingleStation";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import journeyDB from "./services/journeyDB";
 import stationDB from "./services/stationDB";
 import StationsContextLayout from "./components/StationsContextLayout";
+import formatJourneys from "./utils/journeyUtils";
 
 const App = () => {
   const [stations, setStations] = useState(null);
+  const [journeys, setJourneys] = useState(null);
+
+  //Preload first pages of content
 
   useEffect(() => {
     const fetchData = async () => {
-      const stations = await stationDB.getAll();
-      console.log("Fetched stations");
+      const stations = await stationDB.getPage(1);
       setStations(stations);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const journeys = await journeyDB.getPage(1);
+      const formatted = formatJourneys(journeys);
+      setJourneys(formatted);
     };
 
     fetchData();
@@ -27,7 +41,12 @@ const App = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/journeys" element={<JourneyTable />} />
+          <Route
+            path="/journeys"
+            element={
+              <JourneyTable journeys={journeys} setJourneys={setJourneys} />
+            }
+          />
           <Route element={<StationsContextLayout stations={stations} />}>
             <Route path="/stations" element={<StationTable />} />
             <Route path="/stations/:id" element={<SingleStation />} />
