@@ -1,10 +1,45 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import StationsContext from "./StationsContext";
+import db from "../services/stationDB";
+import PageNavigation from "./PageNavigation";
 
 const StationTable = () => {
   const navigate = useNavigate();
-  const stations = useContext(StationsContext);
+  const [search, setSearch] = useSearchParams();
+  const { stations, setStations } = useContext(StationsContext);
+
+  const updatePage = async (direction) => {
+    //TODO clicking journeys menu button should load first page
+    //Get query parameters
+    let page = search.get("page");
+
+    // If empty query
+    if (page == null) {
+      if (direction === "back") {
+        //No page 0
+        return;
+      } else {
+        page = 2;
+      }
+    } else {
+      // If going back, decrement page
+      if (direction === "back") {
+        if (page !== 1) {
+          page--;
+        }
+      } else {
+        page++; // Otherwise, increment page
+      }
+    }
+
+    //Add query parameters to url
+    setSearch({ page });
+
+    //Fetch and set data
+    const stations = await db.getPage(page);
+    setStations(stations);
+  };
 
   if (stations === null) return <>Fetching data...</>;
 
@@ -35,18 +70,21 @@ const StationTable = () => {
   });
 
   return (
-    <table className="w-full table-fixed border-collapse border border-slate-500 text-center">
-      <thead>
-        <tr className="hidden border border-slate-600 sm:table-row">
-          <th className="py-4">ID</th>
-          <th className="py-4">Name</th>
-          <th className="py-4">Address</th>
-          <th className="py-4">City</th>
-          <th className="py-4">Capacity</th>
-        </tr>
-      </thead>
-      <tbody>{stationsMap}</tbody>
-    </table>
+    <>
+      <table className="w-full table-fixed border-collapse border border-slate-500 text-center">
+        <thead>
+          <tr className="hidden border border-slate-600 sm:table-row">
+            <th className="py-4">ID</th>
+            <th className="py-4">Name</th>
+            <th className="py-4">Address</th>
+            <th className="py-4">City</th>
+            <th className="py-4">Capacity</th>
+          </tr>
+        </thead>
+        <tbody>{stationsMap}</tbody>
+      </table>
+      <PageNavigation updatePage={updatePage} />
+    </>
   );
 };
 

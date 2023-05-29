@@ -16,7 +16,7 @@ const App = () => {
   const [stations, setStations] = useState(null);
   const [journeys, setJourneys] = useState(null);
 
-  //Preload first pages of content
+  // Preload first pages of content
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,7 +52,14 @@ const App = () => {
           >
             <Route path="/journeys" element={<JourneyTable />} />
           </Route>
-          <Route element={<StationsContextLayout stations={stations} />}>
+          <Route
+            element={
+              <StationsContextLayout
+                stations={stations}
+                setStations={setStations}
+              />
+            }
+          >
             <Route path="/stations" element={<StationTable />} />
             <Route path="/stations/:id" element={<SingleStation />} />
           </Route>

@@ -1,12 +1,12 @@
-import { Outlet } from "react-router-dom"
-import StationsContext from "./StationsContext"
+import { Outlet } from "react-router-dom";
+import StationsContext from "./StationsContext";
 
-const StationsContextLayout = ({ stations }) => {
-    return (
-        <StationsContext.Provider value={stations}>
-            <Outlet />
-        </StationsContext.Provider>
-    )
-}
+const StationsContextLayout = ({ stations, setStations }) => {
+  return (
+    <StationsContext.Provider value={{ stations, setStations }}>
+      <Outlet />
+    </StationsContext.Provider>
+  );
+};
 
-export default StationsContextLayout
+export default StationsContextLayout;
