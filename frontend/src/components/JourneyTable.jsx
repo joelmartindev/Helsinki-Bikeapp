@@ -9,15 +9,29 @@ const JourneyTable = () => {
   const { journeys, setJourneys } = useContext(JourneysContext);
   const [search, setSearch] = useSearchParams();
 
-  const updatePage = async () => {
+  const updatePage = async (direction) => {
     //TODO clicking journeys menu button should load first page
     //Get query parameters
     let page = search.get("page");
     console.log(journeys);
     // If empty query
     if (page == null) {
-      page = 2;
-    } else page++; //TODO only changes to next page right now
+      if (direction === "back") {
+        //No page 0
+        return;
+      } else {
+        page = 2;
+      }
+    } else {
+      // If going back, decrement page
+      if (direction === "back") {
+        if (page !== 1) {
+          page--;
+        }
+      } else {
+        page++; // Otherwise, increment page
+      }
+    }
 
     //Add query parameters to url
     setSearch({ page });
