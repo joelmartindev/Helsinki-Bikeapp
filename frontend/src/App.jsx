@@ -1,5 +1,5 @@
 import "./App.css";
-import Layout from "./components/Layout";
+import RootLayout from "./components/RootLayout";
 import Home from "./components/Home";
 import JourneyTable from "./components/JourneyTable";
 import StationTable from "./components/StationTable";
@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import journeyDB from "./services/journeyDB";
 import stationDB from "./services/stationDB";
+import JourneysContextLayout from "./components/JourneysContextLayout";
 import StationsContextLayout from "./components/StationsContextLayout";
 import formatJourneys from "./utils/journeyUtils";
 
@@ -39,14 +40,18 @@ const App = () => {
   return (
     <div className="mx-auto max-w-7xl">
       <Routes>
-        <Route element={<Layout />}>
+        <Route element={<RootLayout />}>
           <Route path="/" element={<Home />} />
           <Route
-            path="/journeys"
             element={
-              <JourneyTable journeys={journeys} setJourneys={setJourneys} />
+              <JourneysContextLayout
+                journeys={journeys}
+                setJourneys={setJourneys}
+              />
             }
-          />
+          >
+            <Route path="/journeys" element={<JourneyTable />} />
+          </Route>
           <Route element={<StationsContextLayout stations={stations} />}>
             <Route path="/stations" element={<StationTable />} />
             <Route path="/stations/:id" element={<SingleStation />} />

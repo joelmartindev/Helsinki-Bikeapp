@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import db from "../services/journeyDB";
 import PageNavigation from "./PageNavigation";
 import { useSearchParams } from "react-router-dom";
 import formatJourneys from "../utils/journeyUtils";
+import JourneysContext from "./JourneysContext";
 
-const JourneyTable = ({ journeys, setJourneys }) => {
+const JourneyTable = () => {
+  const { journeys, setJourneys } = useContext(JourneysContext);
   const [search, setSearch] = useSearchParams();
 
   const updatePage = async () => {
-    //TODO clicking journeys menu button loads first page
+    //TODO clicking journeys menu button should load first page
     //Get query parameters
     let page = search.get("page");
     console.log(journeys);
