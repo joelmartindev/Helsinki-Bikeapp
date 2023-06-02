@@ -1,29 +1,61 @@
 import { Link, Outlet } from "react-router-dom";
+import { useState } from "react";
+import { ReactComponent as Logo } from "../assets/bike.svg";
 
 const Layout = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const menuClick = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <>
-      <header className="flex justify-between bg-gray-400 p-5 shadow">
-        <Link to="/" className="mx-2 text-xl italic">
-          Bikeapp
+    <div className="bg-stone-100">
+      <header className="flex items-center justify-between bg-custom-eerie-black p-3 align-middle shadow-md">
+        <Link to="/" className="mx-2 flex ">
+          <Logo className="h-10 w-10 fill-white stroke-black stroke-2" />
+          <div className="bg-gradient-to-r from-lime-400 to-custom-malachite bg-clip-text pl-2 font-serif text-3xl font-extrabold italic text-transparent shadow-white drop-shadow">
+            Bikeapp
+          </div>
         </Link>
-        <nav className="bg-red-50">
-          <Link to="/" className="my-4 px-4">
+        <nav className="flex max-[449px]:flex-col">
+          <div
+            className="my-4 block px-4 text-lg font-semibold text-white min-[450px]:hidden"
+            onClick={menuClick}
+          >
+            Menu
+          </div>
+          <Link
+            to="/"
+            className="my-4 hidden px-4  text-xl font-semibold text-white sm:block"
+          >
             Home
           </Link>
-          <Link to="/journeys" className="px-4">
+          <Link
+            to="/journeys"
+            className={`${
+              isMenuOpen ? "max-[449px]:block" : "hidden"
+            } my-4 px-4 text-xl font-semibold text-white min-[450px]:block`}
+          >
             Journeys
           </Link>
-          <Link to="/stations" className="px-4">
+          <Link
+            to="/stations"
+            className={`${
+              isMenuOpen ? "max-[449px]:block" : "hidden"
+            } my-4 px-4 text-xl font-semibold text-white min-[450px]:block`}
+          >
             Stations
           </Link>
         </nav>
       </header>
-      <Outlet />
-      <footer>
-        <div>Footer of Bikeapp, Made in 2023</div>
+      <div id="content" className="mx-auto min-h-screen max-w-6xl">
+        <Outlet />
+      </div>
+      <footer className="mx-auto max-w-6xl">
+        <div className="italic">Made by joelmartindev</div>
       </footer>
-    </>
+    </div>
   );
 };
 

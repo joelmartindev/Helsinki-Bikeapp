@@ -48,7 +48,7 @@ const StationTable = () => {
       <tr
         key={station.id}
         onClick={() => navigate(`/stations/${station.id}`)}
-        className="flex border-collapse flex-col border border-slate-700 text-left sm:table-row"
+        className="mx-auto flex border-collapse flex-col border-x-4 border-transparent bg-neutral-100 text-left hover:scale-100 hover:border-x-4 hover:border-x-custom-malachite  hover:shadow-lg sm:table-row"
       >
         <td className="grid grid-cols-2 px-3 py-2 pt-6 before:content-['ID:_\00a0'] sm:table-cell sm:py-10 sm:before:content-none">
           <div className="text-left sm:text-center">{station.id}</div>
@@ -70,10 +70,11 @@ const StationTable = () => {
   });
 
   return (
-    <>
-      <table className="w-full table-fixed border-collapse border border-slate-500 text-center">
+    <div className="flex flex-col">
+      <h1 className="mx-auto my-8 text-3xl font-semibold">Stations</h1>
+      <table className="w-full table-fixed text-center shadow-md">
         <thead>
-          <tr className="hidden border border-slate-600 sm:table-row">
+          <tr className="hidden bg-neutral-100 shadow-xl sm:table-row">
             <th className="py-4">ID</th>
             <th className="py-4">Name</th>
             <th className="py-4">Address</th>
@@ -84,7 +85,7 @@ const StationTable = () => {
         <tbody>{stationsMap}</tbody>
       </table>
       <PageNavigation updatePage={updatePage} />
-    </>
+    </div>
   );
 };
 

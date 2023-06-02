@@ -38,7 +38,7 @@ const App = () => {
   }, []);
 
   return (
-    <div className="mx-auto max-w-7xl">
+    <>
       <Routes>
         <Route element={<RootLayout />}>
           <Route path="/" element={<Home />} />
@@ -65,7 +65,7 @@ const App = () => {
           </Route>
         </Route>
       </Routes>
-    </div>
+    </>
   );
 };
 

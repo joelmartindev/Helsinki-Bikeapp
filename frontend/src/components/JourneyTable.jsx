@@ -13,7 +13,7 @@ const JourneyTable = () => {
     //TODO clicking journeys menu button should load first page
     //Get query parameters
     let page = search.get("page");
-    console.log(journeys);
+
     // If empty query
     if (page == null) {
       if (direction === "back") {
@@ -39,6 +39,7 @@ const JourneyTable = () => {
     //Fetch and set data
     const res = await db.getPage(page);
     const formatted = formatJourneys(res);
+    console.log(formatted);
     setJourneys(formatted);
   };
 
@@ -48,14 +49,8 @@ const JourneyTable = () => {
     return (
       <tr
         key={journey.id}
-        className="flex border-collapse flex-col border border-slate-700 text-left sm:table-row"
+        className="mx-auto flex border-collapse flex-col border-x-4 border-transparent bg-neutral-100 text-left hover:scale-100 hover:border-x-4 hover:border-x-custom-malachite  hover:shadow-lg sm:table-row"
       >
-        <td className="grid grid-cols-2 px-3 py-2 pt-6 before:content-['Departure:_\00a0'] sm:table-cell sm:py-10 sm:before:content-none">
-          <div className="text-left sm:text-center">{journey.departure}</div>
-        </td>
-        <td className="grid grid-cols-2 px-3 py-2 before:content-['Return:_\00a0'] sm:table-cell sm:py-10 sm:before:content-none">
-          <div className="text-left sm:text-center">{journey.return}</div>
-        </td>
         <td className="grid grid-cols-2 px-3 py-2 before:content-['Departure_station:_\00a0'] sm:table-cell sm:py-10 sm:before:content-none">
           <div className="text-left sm:text-center">
             {journey.departure_station}
@@ -79,12 +74,11 @@ const JourneyTable = () => {
   });
 
   return (
-    <div className="">
-      <table className="w-full table-fixed border-collapse border border-slate-500 text-center">
+    <div className="flex flex-col">
+      <h1 className="mx-auto my-8 text-3xl font-semibold">Journeys</h1>
+      <table className="w-full table-fixed text-center shadow-md">
         <thead>
-          <tr className="hidden border border-slate-600 sm:table-row">
-            <th className="py-4">Departure</th>
-            <th className="py-4">Return</th>
+          <tr className="hidden bg-neutral-100 shadow-xl sm:table-row">
             <th className="py-4">Departure station</th>
             <th className="py-4">Return station</th>
             <th className="py-4">Covered distance</th>
