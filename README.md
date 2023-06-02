@@ -2,6 +2,8 @@
 
 My solution for the 2023 Dev Academy. I'll be learning new stuff as I go along.
 
+The website is deployed at https://helsinkibikeapp.fly.dev/
+
 ## Current plan
 
 - I think I will first create the recommended features of the frontend
