@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import db from "../services/journeyDB";
 import PageNavigation from "./PageNavigation";
 import { useSearchParams } from "react-router-dom";
@@ -13,28 +13,33 @@ const JourneyTable = () => {
     //TODO clicking journeys menu button should load first page
     //Get query parameters
     let page = search.get("page");
+    db.cancelRequests();
 
-    // If empty query
-    if (page == null) {
-      if (direction === "back") {
-        //No page 0
-        return;
-      } else {
-        page = 2;
-      }
-    } else {
-      // If going back, decrement page
-      if (direction === "back") {
-        if (page !== 1) {
-          page--;
+    // Update page number in url
+    // If not direct connecting to url, but using buttons instead
+    if (direction !== "same") {
+      // If empty query
+      if (page == null) {
+        if (direction === "back") {
+          //No page 0
+          return;
+        } else {
+          page = 2;
         }
       } else {
-        page++; // Otherwise, increment page
+        // If going back, decrement page
+        if (direction === "back") {
+          if (page !== 1) {
+            page--;
+          }
+        } else {
+          page++; // Otherwise, increment page
+        }
       }
-    }
 
-    //Add query parameters to url
-    setSearch({ page });
+      //Add query parameters to url
+      setSearch({ page });
+    }
 
     //Fetch and set data
     const res = await db.getPage(page);
@@ -42,6 +47,13 @@ const JourneyTable = () => {
     console.log(formatted);
     setJourneys(formatted);
   };
+
+  useEffect(() => {
+    // When direct connecting to url, fetch correct page
+    if (search.get("page") > 1) {
+      updatePage("same");
+    }
+  }, []);
 
   if (journeys === null) return <>Loading journeys... </>; //TODO Better loading screen
 
