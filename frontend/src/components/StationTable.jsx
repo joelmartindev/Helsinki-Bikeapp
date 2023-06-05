@@ -1,45 +1,10 @@
 import { useContext } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import StationsContext from "./StationsContext";
-import db from "../services/stationDB";
-import PageNavigation from "./PageNavigation";
 
 const StationTable = () => {
   const navigate = useNavigate();
-  const [search, setSearch] = useSearchParams();
   const { stations, setStations } = useContext(StationsContext);
-
-  const updatePage = async (direction) => {
-    //TODO clicking journeys menu button should load first page
-    //Get query parameters
-    let page = Number.parseInt(search.get("page"));
-
-    // If empty query
-    if (isNaN(page)) {
-      if (direction === "back") {
-        //No page 0
-        return;
-      } else {
-        page = 2;
-      }
-    } else {
-      // If going back, decrement page
-      if (direction === "back") {
-        if (page !== 1) {
-          page--;
-        } else return;
-      } else {
-        page++; // Otherwise, increment page
-      }
-    }
-
-    //Add query parameters to url
-    setSearch({ page });
-
-    //Fetch and set data
-    const stations = await db.getPage(page);
-    setStations(stations);
-  };
 
   if (stations === null) return <>Fetching data...</>;
 
@@ -72,8 +37,7 @@ const StationTable = () => {
   });
 
   return (
-    <div className="flex flex-col">
-      <h1 className="mx-auto my-8 text-3xl font-semibold">Stations</h1>
+    <>
       <table className="w-full table-fixed text-center shadow-md">
         <thead>
           <tr className="hidden bg-neutral-100 shadow-xl sm:table-row">
@@ -86,8 +50,7 @@ const StationTable = () => {
         </thead>
         <tbody>{stationsMap}</tbody>
       </table>
-      <PageNavigation updatePage={updatePage} />
-    </div>
+    </>
   );
 };
 

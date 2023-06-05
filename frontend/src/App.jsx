@@ -1,16 +1,16 @@
 import "./App.css";
-import RootLayout from "./components/RootLayout";
-import Home from "./components/Home";
-import JourneyTable from "./components/JourneyTable";
-import StationTable from "./components/StationTable";
-import SingleStation from "./components/SingleStation";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import journeyDB from "./services/journeyDB";
 import stationDB from "./services/stationDB";
+import formatJourneys from "./utils/journeyUtils";
+import RootLayout from "./components/RootLayout";
 import JourneysContextLayout from "./components/JourneysContextLayout";
 import StationsContextLayout from "./components/StationsContextLayout";
-import formatJourneys from "./utils/journeyUtils";
+import Home from "./components/Home";
+import JourneyView from "./components/JourneyView";
+import StationView from "./components/StationView";
+import SingleStation from "./components/SingleStation";
 
 const App = () => {
   const [stations, setStations] = useState(null);
@@ -50,7 +50,7 @@ const App = () => {
               />
             }
           >
-            <Route path="/journeys" element={<JourneyTable />} />
+            <Route path="/journeys" element={<JourneyView />} />
           </Route>
           <Route
             element={
@@ -60,7 +60,7 @@ const App = () => {
               />
             }
           >
-            <Route path="/stations" element={<StationTable />} />
+            <Route path="/stations" element={<StationView />} />
             <Route path="/stations/:id" element={<SingleStation />} />
           </Route>
         </Route>
