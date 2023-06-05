@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../utils/dbConfig");
 const { Journey } = require("../models/Journey");
 
-const pageSize = 6;
+const pageSize = 10;
 
 router.get("/", (req, res) => {
   const offset = pageSize * req.query.page - pageSize;

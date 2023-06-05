@@ -1,10 +1,10 @@
 import { useContext, useEffect } from "react";
-import db from "../services/journeyDB";
-import PageNavigation from "./PageNavigation";
 import { useSearchParams } from "react-router-dom";
+import db from "../services/journeyDB";
 import formatJourneys from "../utils/journeyUtils";
 import JourneysContext from "./JourneysContext";
 import JourneyTable from "./JourneyTable";
+import PageNavigation from "./PageNavigation";
 
 const JourneyView = () => {
   const { journeys, setJourneys } = useContext(JourneysContext);
@@ -16,31 +16,31 @@ const JourneyView = () => {
     let page = Number.parseInt(search.get("page"));
     db.cancelRequests();
 
-    // Update page number in url
-    // If not direct connecting to url, but using buttons instead
-    if (direction !== "same") {
-      // If empty query
-      if (isNaN(page)) {
-        if (direction === "back") {
-          //No page 0
-          return;
-        } else {
-          page = 2;
-        }
+    // Update page number
+    // If empty query
+    if (isNaN(page)) {
+      if (direction === "back") {
+        //No page 0
+        return;
       } else {
-        // If going back, decrement page
-        if (direction === "back") {
-          if (page !== 1) {
-            page--;
-          } else return;
-        } else {
-          page++; // Otherwise, increment page
-        }
+        page = 2;
       }
-
-      //Add query parameters to url
-      setSearch({ page });
+    } else {
+      // If going back, decrement page
+      if (direction === "back") {
+        if (page !== 1) {
+          page--;
+        } else return;
+      } else {
+        page++; // Otherwise, increment page
+      }
     }
+
+    //Add query parameters to url
+    setSearch({ page });
+
+    // Clean state to show loading animation
+    setJourneys(null);
 
     //Fetch and set data
     const res = await db.getPage(page);
@@ -50,17 +50,26 @@ const JourneyView = () => {
   };
 
   useEffect(() => {
-    // When direct connecting to url, fetch correct page
-    if (search.get("page") > 1) {
-      updatePage("same");
-    }
+    const fetchData = async () => {
+      const page = Number.parseInt(search.get("page"));
+      let journeys;
+      if (isNaN(page)) {
+        journeys = await db.getPage(1);
+      } else {
+        journeys = await db.getPage(page);
+      }
+      const formatted = formatJourneys(journeys);
+      setJourneys(formatted);
+    };
+
+    fetchData();
   }, []);
 
   return (
     <div className="flex flex-col">
       <h1 className="mx-auto my-8 text-3xl font-semibold">Journeys</h1>
-      <JourneyTable />
       <PageNavigation updatePage={updatePage} />
+      <JourneyTable />
     </div>
   );
 };
