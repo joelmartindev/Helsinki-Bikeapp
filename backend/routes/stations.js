@@ -9,7 +9,7 @@ const pageSize = 6;
 router.get("/", (req, res) => {
   const offset = pageSize * req.query.page - pageSize;
 
-  Station.findAll({ limit: pageSize, offset: offset })
+  Station.findAll({ limit: pageSize, offset: offset, order: db.col("id") })
     .then((stations) => {
       console.log(stations);
       res.status(200).json(stations);
