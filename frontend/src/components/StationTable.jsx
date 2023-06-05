@@ -12,10 +12,10 @@ const StationTable = () => {
   const updatePage = async (direction) => {
     //TODO clicking journeys menu button should load first page
     //Get query parameters
-    let page = search.get("page");
+    let page = Number.parseInt(search.get("page"));
 
     // If empty query
-    if (page == null) {
+    if (isNaN(page)) {
       if (direction === "back") {
         //No page 0
         return;
@@ -27,7 +27,7 @@ const StationTable = () => {
       if (direction === "back") {
         if (page !== 1) {
           page--;
-        }
+        } else return;
       } else {
         page++; // Otherwise, increment page
       }
@@ -60,7 +60,9 @@ const StationTable = () => {
           <div className="text-left sm:text-center">{station.address_fi}</div>
         </td>
         <td className="grid grid-cols-2 px-3 py-2 pt-6 before:content-['City:_\00a0'] sm:table-cell sm:py-10 sm:before:content-none">
-          <div className="text-left sm:text-center">{station.city_fi}</div>
+          <div className="text-left sm:text-center">
+            {!station.city_fi ? station.city_fi : "-"}
+          </div>
         </td>
         <td className="grid grid-cols-2 px-3 py-2 pt-6 before:content-['Capacity:_\00a0'] sm:table-cell sm:py-10 sm:before:content-none">
           <div className="text-left sm:text-center">{station.capacity}</div>

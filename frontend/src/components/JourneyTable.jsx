@@ -12,14 +12,15 @@ const JourneyTable = () => {
   const updatePage = async (direction) => {
     //TODO clicking journeys menu button should load first page
     //Get query parameters
-    let page = search.get("page");
+    let page = Number.parseInt(search.get("page"));
     db.cancelRequests();
 
     // Update page number in url
     // If not direct connecting to url, but using buttons instead
     if (direction !== "same") {
       // If empty query
-      if (page == null) {
+      console.log(page);
+      if (isNaN(page)) {
         if (direction === "back") {
           //No page 0
           return;
@@ -31,7 +32,7 @@ const JourneyTable = () => {
         if (direction === "back") {
           if (page !== 1) {
             page--;
-          }
+          } else return;
         } else {
           page++; // Otherwise, increment page
         }
