@@ -6,6 +6,7 @@ const { Journey } = require("../models/Journey");
 
 const pageSize = 10;
 
+// Get a page
 router.get("/", (req, res) => {
   const offset = pageSize * req.query.page - pageSize;
 
@@ -17,6 +18,17 @@ router.get("/", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+// Get total number of pages
+router.get("/totalPages/", (req, res) => {
+  Station.count()
+    .then((totalRows) => {
+      const totalPages = Math.ceil(totalRows / pageSize);
+      res.status(200).json({ totalPages });
+    })
+    .catch((err) => console.log(err));
+});
+
+// Get a single station
 router.get("/:id", (req, res) => {
   Station.findByPk(req.params.id)
     .then((station) => {
@@ -26,6 +38,7 @@ router.get("/:id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+// Get total journeys for a station
 router.get("/:id/journeys", async (req, res) => {
   try {
     // Count departures
