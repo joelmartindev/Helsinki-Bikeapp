@@ -2,6 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import stationDB from "./services/stationDB";
+import journeyDB from "./services/journeyDB";
 import RootLayout from "./components/RootLayout";
 import JourneysContextLayout from "./components/JourneysContextLayout";
 import StationsContextLayout from "./components/StationsContextLayout";
@@ -14,6 +15,27 @@ const App = () => {
   const [stations, setStations] = useState(null);
   const [journeys, setJourneys] = useState(null);
 
+  const [totalJourneyPages, setTotalJourneyPages] = useState(null);
+  const [totalStationPages, setTotalStationPages] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await journeyDB.getTotalPages();
+      setTotalJourneyPages(result.totalPages);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await stationDB.getTotalPages();
+      setTotalStationPages(result.totalPages);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       <Routes>
@@ -24,6 +46,7 @@ const App = () => {
               <JourneysContextLayout
                 journeys={journeys}
                 setJourneys={setJourneys}
+                totalPages={totalJourneyPages}
               />
             }
           >
@@ -34,6 +57,7 @@ const App = () => {
               <StationsContextLayout
                 stations={stations}
                 setStations={setStations}
+                totalPages={totalStationPages}
               />
             }
           >

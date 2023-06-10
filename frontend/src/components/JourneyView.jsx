@@ -7,12 +7,14 @@ import JourneyTable from "./JourneyTable";
 import PageNavigation from "./PageNavigation";
 
 const JourneyView = () => {
-  const { journeys, setJourneys } = useContext(JourneysContext);
+  const { journeys, setJourneys, totalPages } = useContext(JourneysContext);
   const [search, setSearch] = useSearchParams();
 
+  let currentPage = Number.parseInt(search.get("page"));
+  currentPage = isNaN(currentPage) ? 1 : currentPage;
+
   const updatePage = async (direction) => {
-    //TODO clicking journeys menu button should load first page
-    //Get query parameters
+    // Get query parameters
     let page = Number.parseInt(search.get("page"));
     db.cancelRequests();
 
@@ -36,19 +38,20 @@ const JourneyView = () => {
       }
     }
 
-    //Add query parameters to url
+    // Add query parameters to url
     setSearch({ page });
 
     // Clean state to show loading animation
     setJourneys(null);
 
-    //Fetch and set data
+    // Fetch and set data
     const res = await db.getPage(page);
     const formatted = formatJourneys(res);
     console.log(formatted);
     setJourneys(formatted);
   };
 
+  // Fetch current page
   useEffect(() => {
     const fetchData = async () => {
       const page = Number.parseInt(search.get("page"));
@@ -68,7 +71,13 @@ const JourneyView = () => {
   return (
     <div className="flex flex-col">
       <h1 className="mx-auto my-8 text-3xl font-semibold">Journeys</h1>
-      <PageNavigation updatePage={updatePage} />
+      {journeys && (
+        <PageNavigation
+          updatePage={updatePage}
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
+      )}
       <JourneyTable />
     </div>
   );

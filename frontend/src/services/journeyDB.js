@@ -20,6 +20,16 @@ const getPage = async (page) => {
   }
 };
 
+const getTotalPages = async () => {
+  try {
+    const response = await fetch(`${baseURL}/api/journeys/totalPages`);
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const cancelRequests = () => {
   controller.abort();
   controller = new AbortController();
@@ -27,5 +37,6 @@ const cancelRequests = () => {
 
 export default {
   getPage,
+  getTotalPages,
   cancelRequests,
 };

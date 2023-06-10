@@ -7,7 +7,10 @@ import StationTable from "./StationTable";
 
 const StationView = () => {
   const [search, setSearch] = useSearchParams();
-  const { stations, setStations } = useContext(StationsContext);
+  const { stations, setStations, totalPages } = useContext(StationsContext);
+
+  let currentPage = Number.parseInt(search.get("page"));
+  currentPage = isNaN(currentPage) ? 1 : currentPage;
 
   const updatePage = async (direction) => {
     //TODO clicking journeys menu button should load first page
@@ -62,7 +65,13 @@ const StationView = () => {
   return (
     <div className="flex flex-col">
       <h1 className="mx-auto my-8 text-3xl font-semibold">Stations</h1>
-      <PageNavigation updatePage={updatePage} />
+      {stations && (
+        <PageNavigation
+          updatePage={updatePage}
+          totalPages={totalPages}
+          currentPage={currentPage}
+        />
+      )}
       <StationTable />
     </div>
   );

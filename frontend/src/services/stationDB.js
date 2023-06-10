@@ -14,7 +14,18 @@ const getTotalJourneys = async (id) => {
   return jsonData;
 };
 
+const getTotalPages = async () => {
+  try {
+    const response = await fetch(`${baseURL}/api/stations/totalPages`);
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default {
   getPage,
   getTotalJourneys,
+  getTotalPages,
 };
