@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import db from "../services/journeyDB";
 import formatJourneys from "../utils/journeyUtils";
 import JourneysContext from "./JourneysContext";
-import JourneyTable from "./JourneyTable";
+import JourneyList from "./JourneyList";
 import PageNavigation from "./PageNavigation";
 
 const JourneyView = () => {
@@ -78,7 +78,7 @@ const JourneyView = () => {
           currentPage={currentPage}
         />
       )}
-      <JourneyTable />
+      <JourneyList />
     </div>
   );
 };

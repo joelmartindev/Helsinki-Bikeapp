@@ -6,10 +6,8 @@ const formatJourneys = (unformatted) => {
       id: journey.id,
       departure: journey.departure,
       return: journey.return,
-      departure_station:
-        journey.departure_station_id + " - " + journey.departure_station_name,
-      return_station:
-        journey.return_station_id + " - " + journey.return_station_name,
+      departure_station: journey.departure_station_name,
+      return_station: journey.return_station_name,
       covered_distance: journey.covered_distance / 1000 + "km",
       duration: formatTime(journey.duration),
     });
