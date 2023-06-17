@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import StationsContext from "./StationsContext";
 import db from "../services/stationDB";
 import PageNavigation from "./PageNavigation";
-import StationTable from "./StationTable";
+import StationList from "./StationList";
 
 const StationView = () => {
   const [search, setSearch] = useSearchParams();
@@ -64,7 +64,9 @@ const StationView = () => {
 
   return (
     <div className="flex flex-col">
-      <h1 className="mx-auto my-8 text-3xl font-semibold">Stations</h1>
+      <h1 className="mx-auto my-8 text-4xl font-bold text-custom-isabelline drop-shadow">
+        Stations
+      </h1>
       {stations && (
         <PageNavigation
           updatePage={updatePage}
@@ -72,7 +74,7 @@ const StationView = () => {
           currentPage={currentPage}
         />
       )}
-      <StationTable />
+      <StationList />
     </div>
   );
 };

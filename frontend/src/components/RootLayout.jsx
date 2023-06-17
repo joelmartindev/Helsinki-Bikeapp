@@ -10,8 +10,8 @@ const Layout = () => {
   };
 
   return (
-    <div className="bg-stone-100">
-      <header className="bg-custom-eerie-black">
+    <div className="bg-custom-jet">
+      <header className="bg-neutral-900">
         <div className="mx-auto flex max-w-7xl items-center justify-between p-3 align-middle shadow-md">
           <Link to="/" className="mx-2 flex ">
             <Logo className="h-10 w-10 fill-white stroke-black stroke-2" />
@@ -55,7 +55,9 @@ const Layout = () => {
         <Outlet />
       </div>
       <footer className="mx-auto max-w-6xl">
-        <div className="italic">Made by joelmartindev</div>
+        <div className="italic text-custom-isabelline">
+          Made by joelmartindev
+        </div>
       </footer>
     </div>
   );

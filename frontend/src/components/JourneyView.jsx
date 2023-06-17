@@ -70,7 +70,9 @@ const JourneyView = () => {
 
   return (
     <div className="flex flex-col">
-      <h1 className="mx-auto my-8 text-3xl font-semibold">Journeys</h1>
+      <h1 className="mx-auto my-8 text-4xl font-bold text-custom-isabelline drop-shadow">
+        Journeys
+      </h1>
       {journeys && (
         <PageNavigation
           updatePage={updatePage}

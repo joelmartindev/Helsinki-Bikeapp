@@ -8,7 +8,7 @@ const formatJourneys = (unformatted) => {
       return: journey.return,
       departure_station: journey.departure_station_name,
       return_station: journey.return_station_name,
-      covered_distance: journey.covered_distance / 1000 + "km",
+      covered_distance: (journey.covered_distance / 1000).toFixed(1) + "km",
       duration: formatTime(journey.duration),
     });
   });

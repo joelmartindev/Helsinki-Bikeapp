@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import JourneyView from "./components/JourneyView";
 import StationView from "./components/StationView";
 import SingleStation from "./components/SingleStation";
+import SingleJourney from "./components/SingleJourney";
 
 const App = () => {
   const [stations, setStations] = useState(null);
@@ -51,6 +52,7 @@ const App = () => {
             }
           >
             <Route path="/journeys" element={<JourneyView />} />
+            <Route path="/journeys/:id" element={<SingleJourney />} />
           </Route>
           <Route
             element={
