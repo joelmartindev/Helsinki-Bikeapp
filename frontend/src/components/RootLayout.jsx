@@ -51,7 +51,7 @@ const Layout = () => {
           </nav>
         </div>
       </header>
-      <div id="content" className="mx-auto min-h-screen max-w-6xl">
+      <div id="content" className="mx-auto min-h-screen">
         <Outlet />
       </div>
       <footer className="mx-auto max-w-6xl">
