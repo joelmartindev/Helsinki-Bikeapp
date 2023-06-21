@@ -14,9 +14,9 @@ router.get("/", (req, res) => {
     offset: offset,
     order: db.col("departure"),
   })
-    .then((stations) => {
-      console.log(stations);
-      res.status(200).json(stations);
+    .then((journeys) => {
+      console.log(journeys);
+      res.status(200).json(journeys);
     })
     .catch((err) => console.log(err));
 });
@@ -28,6 +28,16 @@ router.get("/totalPages", (req, res) => {
       let totalPages = countedJourneys / pageSize;
       totalPages = Math.ceil(totalPages);
       res.status(200).json({ totalPages });
+    })
+    .catch((err) => console.log(err));
+});
+
+// Get a single journey
+router.get("/:id", (req, res) => {
+  Journey.findByPk(req.params.id)
+    .then((journey) => {
+      console.log(journey);
+      res.status(200).json(journey);
     })
     .catch((err) => console.log(err));
 });

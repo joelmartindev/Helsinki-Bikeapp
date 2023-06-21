@@ -4,8 +4,8 @@ const formatJourneys = (unformatted) => {
   unformatted.map((journey) => {
     formatted.push({
       id: journey.id,
-      departure: journey.departure,
-      return: journey.return,
+      departure: formatDate(journey.departure),
+      return: formatDate(journey.return),
       departure_station: journey.departure_station_name,
       return_station: journey.return_station_name,
       covered_distance: (journey.covered_distance / 1000).toFixed(1) + "km",
@@ -14,6 +14,17 @@ const formatJourneys = (unformatted) => {
   });
 
   return formatted;
+};
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString("en-gb", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
 };
 
 const formatTime = (s) => {

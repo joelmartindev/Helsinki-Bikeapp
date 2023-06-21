@@ -28,7 +28,17 @@ const getTotalPages = async () => {
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+const getJourney = async (id) => {
+  try {
+    const response = await fetch(`${baseURL}/api/journeys/${id}`);
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const cancelRequests = () => {
   controller.abort();
@@ -39,4 +49,5 @@ export default {
   getPage,
   getTotalPages,
   cancelRequests,
+  getJourney,
 };
