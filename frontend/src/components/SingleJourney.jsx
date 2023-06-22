@@ -2,7 +2,8 @@ import { useContext, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ReactComponent as Loading } from "../assets/loading.svg";
 import { ReactComponent as Arrow } from "../assets/arrow.svg";
-import db from "../services/journeyDB";
+import { ReactComponent as Link } from "../assets/link.svg";
+import journeyDB from "../services/journeyDB";
 import formatJourneys from "../utils/journeyUtils";
 import JourneysContext from "./JourneysContext";
 
@@ -15,7 +16,7 @@ const SingleJourney = () => {
   // Fetch single journey data if no journeys data in memory (directly navigated to page)
   useEffect(() => {
     const fetchData = async () => {
-      const result = await db.getJourney(id);
+      const result = await journeyDB.getJourney(id);
       const unformatted = [result];
       const formatted = formatJourneys(unformatted);
       setJourney(formatted[0]);
@@ -48,37 +49,53 @@ const SingleJourney = () => {
           className="h-10 w-10 rotate-180 fill-custom-isabelline stroke-custom-isabelline hover:cursor-pointer"
         />
       </div>
-      <h1 className="text-center text-4xl font-semibold text-custom-isabelline drop-shadow-2xl">
-        Journey Details
-      </h1>
-      <div className="mx-auto mt-8 max-w-xl rounded-2xl bg-custom-onyx px-4 py-4 drop-shadow-2xl">
+      <div className="mx-auto mt-3 max-w-xl rounded-2xl bg-custom-onyx px-4 py-4 drop-shadow-2xl">
         <div className="rounded-2xl bg-custom-isabelline drop-shadow-2xl">
-          <div className="mx-auto px-4 py-4 text-2xl">
+          <div className="mx-auto px-4 py-4 text-2xl leading-relaxed">
+            <div className="mb-2 border-b-2 border-custom-pigment-green font-mono text-3xl font-bold text-neutral-500">
+              Journey #{id}
+            </div>
+            <div className="font-bold text-custom-text underline underline-offset-4">
+              Details
+            </div>
             <div className="text-custom-text ">
-              This journey departed from{" "}
+              This journey started from{" "}
               <span
-                /**onClick={navigate(`/stations/${ need to insert station id}`)} */
-                className="font-semibold text-custom-pigment-green hover:cursor-pointer"
+                onClick={() =>
+                  navigate(`/stations/${journey.departure_station_id}`)
+                }
+                className="inline-flex items-center font-semibold italic text-custom-pigment-green hover:cursor-pointer"
               >
                 {journey.departure_station}
+                <Link className="ml-1 h-4 w-4" />
               </span>
             </div>
             <div className="text-custom-text">
-              at <span className="font-semibold">{journey.departure}</span>
+              on{" "}
+              <span className="font-semibold italic">{journey.departure}</span>
             </div>
-            <div className="text-custom-text ">
-              and arrived at{" "}
-              <span className="font-semibold text-custom-pigment-green hover:cursor-pointer">
+            <div className="text-custom-text">
+              and ended at{" "}
+              <span
+                onClick={() =>
+                  navigate(`/stations/${journey.return_station_id}`)
+                }
+                className="inline-flex items-center font-semibold italic text-custom-pigment-green hover:cursor-pointer"
+              >
                 {journey.return_station}
+                <Link className="ml-1 h-4 w-4" />
               </span>
             </div>
-            <div className="text-custom-text ">
-              on <span className="font-semibold">{journey.return}</span>
+            <div className="text-custom-text">
+              on <span className="font-semibold italic">{journey.return}</span>
             </div>
             <div className="text-custom-text ">
               The journey covered{" "}
-              <span className="font-semibold">{journey.covered_distance}</span>{" "}
-              in <span className="font-semibold">{journey.duration}</span>
+              <span className="font-semibold italic">
+                {journey.covered_distance}
+              </span>{" "}
+              in{" "}
+              <span className="font-semibold italic">{journey.duration}</span>
             </div>
           </div>
         </div>
