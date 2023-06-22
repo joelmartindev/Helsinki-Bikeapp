@@ -13,17 +13,17 @@ const SingleJourney = () => {
   const [journey, setJourney] = useState(null);
   const id = Number(useParams("id").id);
 
+  const fetchJourney = async () => {
+    const result = await journeyDB.getJourney(id);
+    const unformatted = [result];
+    const formatted = formatJourneys(unformatted);
+    setJourney(formatted[0]);
+  };
+
   // Fetch single journey data if no journeys data in memory (directly navigated to page)
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await journeyDB.getJourney(id);
-      const unformatted = [result];
-      const formatted = formatJourneys(unformatted);
-      setJourney(formatted[0]);
-    };
-
     if (journeys === null) {
-      fetchData();
+      fetchJourney();
     }
   }, []);
 
@@ -36,8 +36,13 @@ const SingleJourney = () => {
     // If journeys in memory, find and set journey from them
     else {
       const found = journeys.find((journey) => journey.id === id);
-      setJourney(found);
-      return <Loading />; //Fixes odd bug where journey seemingly isn't set yet when it tries to render
+      if (found) {
+        setJourney(found);
+        return <Loading />;
+      } else {
+        fetchJourney();
+        return <Loading />;
+      }
     }
   }
 
