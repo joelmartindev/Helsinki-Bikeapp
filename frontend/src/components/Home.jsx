@@ -1,6 +1,6 @@
 const Home = () => {
   return (
-    <div className="mx-auto max-w-3xl px-2">
+    <div className="mx-auto max-w-xl px-4">
       <h1 className="mt-10 bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-rose-500 to-indigo-700 bg-clip-text text-5xl font-extrabold leading-tight text-transparent">
         Helsinki CityBike App
       </h1>

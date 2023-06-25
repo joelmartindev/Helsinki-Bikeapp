@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
 import { ReactComponent as Logo } from "../assets/bike.svg";
+import { ReactComponent as GitHub } from "../assets/logo-github.svg";
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,7 +11,7 @@ const Layout = () => {
   };
 
   return (
-    <div className="bg-custom-jet">
+    <div className="flex min-h-screen flex-col bg-custom-jet">
       <header className="bg-neutral-900">
         <div className="mx-auto flex max-w-7xl items-center justify-between p-3 align-middle shadow-md">
           <Link to="/" className="mx-2 flex ">
@@ -51,12 +52,15 @@ const Layout = () => {
           </nav>
         </div>
       </header>
-      <div id="content" className="mx-auto min-h-screen">
+      <div id="content" className="">
         <Outlet />
       </div>
-      <footer className="mx-auto max-w-6xl">
-        <div className="italic text-custom-isabelline">
-          Made by joelmartindev
+      <footer className="mx-auto mt-auto flex max-w-7xl px-2 pt-10">
+        <div className="font-mono text-xs font-semibold italic text-custom-isabelline">
+          made by joelmartindev 2023{" "}
+          <a href="https://github.com/joelmartindev">
+            <GitHub className="mx-1 my-1 inline-block h-5 w-5 fill-custom-isabelline stroke-custom-isabelline" />
+          </a>
         </div>
       </footer>
     </div>
