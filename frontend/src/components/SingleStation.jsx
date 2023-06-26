@@ -6,6 +6,7 @@ import { ReactComponent as Location } from "../assets/location.svg";
 import { ReactComponent as Capacity } from "../assets/capacity.svg";
 import StationsContext from "./StationsContext";
 import stationDB from "../services/stationDB";
+import Map from "./Map";
 
 const SingleStation = () => {
   const navigate = useNavigate();
@@ -94,6 +95,15 @@ const SingleStation = () => {
                 <div>Returns {totalJourneys.returnsCount}</div>
               </>
             )}
+            <h1 className="my-2 font-bold text-custom-text underline underline-offset-4">
+              Map
+            </h1>
+            <Map
+              coord_y={station.coord_y}
+              coord_x={station.coord_x}
+              height={"512px"}
+              name={station.name_fi}
+            />
           </div>
         </div>
       </div>
