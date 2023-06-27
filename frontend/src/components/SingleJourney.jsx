@@ -4,13 +4,16 @@ import { ReactComponent as Loading } from "../assets/loading.svg";
 import { ReactComponent as Arrow } from "../assets/arrow.svg";
 import { ReactComponent as Link } from "../assets/link.svg";
 import journeyDB from "../services/journeyDB";
+import stationDB from "../services/stationDB";
 import formatJourneys from "../utils/journeyUtils";
 import JourneysContext from "./JourneysContext";
+import Map from "./Map";
 
 const SingleJourney = () => {
   const navigate = useNavigate();
   const { journeys } = useContext(JourneysContext);
   const [journey, setJourney] = useState(null);
+  const [journeyStations, setJourneyStations] = useState(null);
   const id = Number(useParams("id").id);
 
   const fetchJourney = async () => {
@@ -26,6 +29,23 @@ const SingleJourney = () => {
       fetchJourney();
     }
   }, []);
+
+  // Fetch the departure and return stations for the map
+  useEffect(() => {
+    const fetchStationsData = async () => {
+      const result = await stationDB.getTwoStations(
+        journey.departure_station_id,
+        journey.return_station_id
+      );
+
+      const stations = result.stations;
+      setJourneyStations(stations);
+    };
+
+    if (journey) {
+      fetchStationsData();
+    }
+  }, [journey]);
 
   // Single journey data not set yet
   if (journey === null) {
@@ -102,6 +122,14 @@ const SingleJourney = () => {
               in{" "}
               <span className="font-semibold italic">{journey.duration}</span>
             </div>
+            <h1 className="my-2 font-bold text-custom-text underline underline-offset-4">
+              Map
+            </h1>
+            {journeyStations ? (
+              <Map stations={journeyStations} height={"512px"} />
+            ) : (
+              <Loading className="h-24 w-24" />
+            )}
           </div>
         </div>
       </div>

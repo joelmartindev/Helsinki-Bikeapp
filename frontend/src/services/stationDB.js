@@ -34,9 +34,22 @@ const getStation = async (id) => {
   }
 };
 
+const getTwoStations = async (departure_station_id, return_station_id) => {
+  try {
+    const response = await fetch(
+      `${baseURL}/api/stations/twoStations?departure=${departure_station_id}&return=${return_station_id}`
+    );
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default {
   getPage,
   getTotalJourneys,
   getTotalPages,
   getStation,
+  getTwoStations,
 };

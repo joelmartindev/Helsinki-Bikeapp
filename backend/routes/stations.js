@@ -19,11 +19,26 @@ router.get("/", (req, res) => {
 });
 
 // Get total number of pages
-router.get("/totalPages/", (req, res) => {
+router.get("/totalPages", (req, res) => {
   Station.count()
     .then((totalRows) => {
       const totalPages = Math.ceil(totalRows / pageSize);
       res.status(200).json({ totalPages });
+    })
+    .catch((err) => console.log(err));
+});
+
+// Get two stations for single journey view's map
+router.get("/twoStations", (req, res) => {
+  const stationIDs = [req.query.departure, req.query.return];
+
+  Station.findAll({
+    where: {
+      id: stationIDs,
+    },
+  })
+    .then((stations) => {
+      res.status(200).json({ stations });
     })
     .catch((err) => console.log(err));
 });

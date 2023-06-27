@@ -98,12 +98,7 @@ const SingleStation = () => {
             <h1 className="my-2 font-bold text-custom-text underline underline-offset-4">
               Map
             </h1>
-            <Map
-              coord_y={station.coord_y}
-              coord_x={station.coord_x}
-              height={"512px"}
-              name={station.name_fi}
-            />
+            <Map stations={[station]} height={"512px"} />
           </div>
         </div>
       </div>
