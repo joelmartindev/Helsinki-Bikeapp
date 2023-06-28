@@ -1,10 +1,12 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { ReactComponent as Logo } from "../assets/bike.svg";
 import { ReactComponent as GitHub } from "../assets/logo-github.svg";
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const activeTab = location.pathname.split("/")[1];
 
   const menuClick = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -29,15 +31,23 @@ const Layout = () => {
             </div>
             <Link
               to="/"
-              className="my-4 hidden px-4  text-xl font-semibold text-white sm:block"
+              className={`
+              ${
+                activeTab == ""
+                  ? "underline decoration-custom-pigment-green underline-offset-8"
+                  : ""
+              } my-4 hidden px-4  text-xl font-semibold text-white sm:block`}
               onClick={menuClick}
             >
               Home
             </Link>
             <Link
               to="/explore"
-              className={`${
-                isMenuOpen ? "block" : "max-sm:hidden"
+              className={`${isMenuOpen ? "block" : "max-sm:hidden"}
+              ${
+                activeTab == "explore"
+                  ? "underline decoration-custom-pigment-green underline-offset-8"
+                  : ""
               } my-4 px-4 text-xl font-semibold text-white`}
               onClick={menuClick}
             >
@@ -45,8 +55,11 @@ const Layout = () => {
             </Link>
             <Link
               to="/journeys"
-              className={`${
-                isMenuOpen ? "max-sm:block" : "max-sm:hidden"
+              className={`${isMenuOpen ? "max-sm:block" : "max-sm:hidden"}
+              ${
+                activeTab == "journeys"
+                  ? "underline decoration-custom-pigment-green underline-offset-8"
+                  : ""
               } my-4 px-4 text-xl font-semibold text-white`}
               onClick={menuClick}
             >
@@ -54,8 +67,11 @@ const Layout = () => {
             </Link>
             <Link
               to="/stations"
-              className={`${
-                isMenuOpen ? "max-sm:block" : "max-sm:hidden"
+              className={`${isMenuOpen ? "max-sm:block" : "max-sm:hidden"}
+              ${
+                activeTab == "stations"
+                  ? "underline decoration-custom-pigment-green underline-offset-8"
+                  : ""
               } my-4 px-4 text-xl font-semibold text-white`}
               onClick={menuClick}
             >
