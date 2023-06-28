@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "deploy": "npm run build && if exist ..\\backend\\dist (rmdir /S /Q ..\\backend\\dist) && move dist ../backend && cd ../backend && fly deploy && cd ../frontend",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
