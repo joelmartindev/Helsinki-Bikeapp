@@ -30,6 +30,7 @@ const Layout = () => {
             <Link
               to="/"
               className="my-4 hidden px-4  text-xl font-semibold text-white sm:block"
+              onClick={menuClick}
             >
               Home
             </Link>
@@ -38,6 +39,7 @@ const Layout = () => {
               className={`${
                 isMenuOpen ? "block" : "max-sm:hidden"
               } my-4 px-4 text-xl font-semibold text-white`}
+              onClick={menuClick}
             >
               Explore
             </Link>
@@ -46,6 +48,7 @@ const Layout = () => {
               className={`${
                 isMenuOpen ? "max-sm:block" : "max-sm:hidden"
               } my-4 px-4 text-xl font-semibold text-white`}
+              onClick={menuClick}
             >
               Journeys
             </Link>
@@ -54,6 +57,7 @@ const Layout = () => {
               className={`${
                 isMenuOpen ? "max-sm:block" : "max-sm:hidden"
               } my-4 px-4 text-xl font-semibold text-white`}
+              onClick={menuClick}
             >
               Stations
             </Link>
