@@ -23,7 +23,7 @@ const Explore = () => {
     return <Loading />;
   }
 
-  return <Map stations={stations} height={"900px"} />;
+  return <Map stations={stations} />;
 };
 
 export default Explore;

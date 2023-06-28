@@ -126,7 +126,7 @@ const SingleJourney = () => {
               Map
             </h1>
             {journeyStations ? (
-              <Map stations={journeyStations} height={"512px"} />
+              <Map stations={journeyStations} />
             ) : (
               <Loading className="h-24 w-24" />
             )}
