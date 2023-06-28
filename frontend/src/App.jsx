@@ -8,6 +8,7 @@ import JourneysContextLayout from "./components/JourneysContextLayout";
 import StationsContextLayout from "./components/StationsContextLayout";
 import Home from "./components/Home";
 import JourneyView from "./components/JourneyView";
+import Explore from "./components/Explore";
 import StationView from "./components/StationView";
 import SingleStation from "./components/SingleStation";
 import SingleJourney from "./components/SingleJourney";
@@ -63,6 +64,7 @@ const App = () => {
               />
             }
           >
+            <Route path="/explore" element={<Explore />} />
             <Route path="/stations" element={<StationView />} />
             <Route path="/stations/:id" element={<SingleStation />} />
           </Route>

@@ -18,6 +18,16 @@ router.get("/", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+// Get all stations for explore view
+router.get("/all", (req, res) => {
+  Station.findAll({ order: db.col("id") })
+    .then((stations) => {
+      console.log(stations);
+      res.status(200).json(stations);
+    })
+    .catch((err) => console.log(err));
+});
+
 // Get total number of pages
 router.get("/totalPages", (req, res) => {
   Station.count()

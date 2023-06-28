@@ -20,9 +20,9 @@ const Layout = () => {
               Bikeapp
             </div>
           </Link>
-          <nav className="flex max-[449px]:flex-col">
+          <nav className="flex max-sm:flex-col">
             <div
-              className="my-4 block px-4 text-lg font-semibold text-white min-[450px]:hidden"
+              className="my-4 block px-4 text-lg font-semibold text-white sm:hidden"
               onClick={menuClick}
             >
               Menu
@@ -34,18 +34,26 @@ const Layout = () => {
               Home
             </Link>
             <Link
+              to="/explore"
+              className={`${
+                isMenuOpen ? "block" : "max-sm:hidden"
+              } my-4 px-4 text-xl font-semibold text-white`}
+            >
+              Explore
+            </Link>
+            <Link
               to="/journeys"
               className={`${
-                isMenuOpen ? "max-[449px]:block" : "hidden"
-              } my-4 px-4 text-xl font-semibold text-white min-[450px]:block`}
+                isMenuOpen ? "max-sm:block" : "max-sm:hidden"
+              } my-4 px-4 text-xl font-semibold text-white`}
             >
               Journeys
             </Link>
             <Link
               to="/stations"
               className={`${
-                isMenuOpen ? "max-[449px]:block" : "hidden"
-              } my-4 px-4 text-xl font-semibold text-white min-[450px]:block`}
+                isMenuOpen ? "max-sm:block" : "max-sm:hidden"
+              } my-4 px-4 text-xl font-semibold text-white`}
             >
               Stations
             </Link>
