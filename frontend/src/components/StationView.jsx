@@ -64,7 +64,7 @@ const StationView = () => {
 
   return (
     <div className="flex flex-col">
-      <h1 className="mx-auto my-8 text-4xl font-bold text-custom-isabelline drop-shadow">
+      <h1 className="mx-auto mb-2 mt-8 text-4xl font-bold text-custom-isabelline drop-shadow">
         Stations
       </h1>
       <PageNavigation

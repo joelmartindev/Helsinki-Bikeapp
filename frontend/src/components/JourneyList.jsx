@@ -17,7 +17,7 @@ const JourneyTable = () => {
     return (
       <div
         key={journey.id}
-        className="group m-2 flex flex-col rounded-2xl border-x-4 border-y-2 border-transparent bg-custom-isabelline p-3 drop-shadow-md hover:scale-100 hover:drop-shadow-2xl sm:flex-row"
+        className="group m-2 flex flex-col rounded-2xl border-x-4 border-y-2 border-transparent bg-custom-isabelline p-3 drop-shadow-md hover:scale-100 hover:bg-gray-200 hover:drop-shadow-2xl sm:flex-row"
       >
         <div id="stations" className="flex items-center">
           <div className="min-w-0 flex-shrink overflow-hidden break-words px-3 py-2 text-lg font-semibold text-custom-text sm:py-5 sm:text-xl">
@@ -39,7 +39,7 @@ const JourneyTable = () => {
           </div>
           <CircleArrow
             onClick={() => navigate(`/journeys/${journey.id}`)}
-            className="min-h-6 min-w-6 ml-auto h-10 w-10 flex-shrink-0 place-self-center stroke-custom-pigment-green hover:cursor-pointer sm:hidden sm:h-12 sm:w-12 sm:group-hover:block"
+            className="min-h-6 min-w-6 ml-auto h-10 w-10 flex-shrink-0 place-self-center stroke-custom-pigment-green hover:cursor-pointer sm:h-12 sm:w-12"
           />
         </div>
       </div>

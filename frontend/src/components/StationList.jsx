@@ -16,7 +16,7 @@ const StationList = () => {
     return (
       <div
         key={station.id}
-        className="group m-2 flex flex-col rounded-2xl border-x-4 border-y-2 border-transparent bg-custom-isabelline p-3 drop-shadow-md hover:scale-100 hover:drop-shadow-2xl sm:flex-row"
+        className="group m-2 flex flex-col rounded-2xl border-x-4 border-y-2 border-transparent bg-custom-isabelline p-3 drop-shadow-md hover:scale-100 hover:bg-gray-200 hover:drop-shadow-2xl sm:flex-row"
       >
         <div className="flex items-center sm:px-2">
           <div className="min-w-0 whitespace-nowrap px-2 py-2 text-2xl font-bold text-custom-text sm:py-5 sm:text-xl">
@@ -42,7 +42,7 @@ const StationList = () => {
           </div>
           <CircleArrow
             onClick={() => navigate(`/stations/${station.id}`)}
-            className="min-h-6 min-w-6 ml-auto h-10 w-10 flex-shrink-0 stroke-custom-pigment-green hover:cursor-pointer sm:hidden sm:h-12 sm:w-12 sm:group-hover:block"
+            className="min-h-6 min-w-6 ml-auto h-10 w-10 flex-shrink-0 stroke-custom-pigment-green hover:cursor-pointer sm:h-12 sm:w-12"
           />
         </div>
       </div>
