@@ -73,13 +73,11 @@ const JourneyView = () => {
       <h1 className="mx-auto my-8 text-4xl font-bold text-custom-isabelline drop-shadow">
         Journeys
       </h1>
-      {journeys && (
-        <PageNavigation
-          updatePage={updatePage}
-          totalPages={totalPages}
-          currentPage={currentPage}
-        />
-      )}
+      <PageNavigation
+        updatePage={updatePage}
+        totalPages={totalPages}
+        currentPage={currentPage}
+      />
       <JourneyList />
     </div>
   );

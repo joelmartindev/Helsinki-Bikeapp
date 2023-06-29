@@ -67,13 +67,11 @@ const StationView = () => {
       <h1 className="mx-auto my-8 text-4xl font-bold text-custom-isabelline drop-shadow">
         Stations
       </h1>
-      {stations && (
-        <PageNavigation
-          updatePage={updatePage}
-          totalPages={totalPages}
-          currentPage={currentPage}
-        />
-      )}
+      <PageNavigation
+        updatePage={updatePage}
+        totalPages={totalPages}
+        currentPage={currentPage}
+      />
       <StationList />
     </div>
   );
