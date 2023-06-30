@@ -13,6 +13,40 @@ export default {
         "custom-text": "#333333",
         "custom-anti-flash-white": "#F1F1F1",
       },
+      keyframes: {
+        "triangle-short": {
+          from: {
+            transform: "translate(0px, 5px)",
+          },
+          "50%": {
+            transform: "translate(130px, 10px)",
+          },
+          "75%": {
+            transform: "translate(90px, 0px)",
+          },
+          to: {
+            transform: "translate(0px, 5px)",
+          },
+        },
+        "triangle-long": {
+          from: {
+            transform: "translate(0px, 10px)",
+          },
+          "50%": {
+            transform: "translate(180px, 15px)",
+          },
+          "70%": {
+            transform: "translate(140px, 5px)",
+          },
+          to: {
+            transform: "translate(0px, 10px)",
+          },
+        },
+      },
+      animation: {
+        "triangle-short": "triangle-short 9s ease-in-out infinite",
+        "triangle-long": "triangle-long 11s ease-in-out infinite",
+      },
     },
   },
   plugins: [],
