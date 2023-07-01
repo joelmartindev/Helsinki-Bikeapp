@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { Op } = require("sequelize");
 const db = require("../utils/dbConfig");
 const { Journey } = require("../models/Journey");
 
@@ -8,8 +9,23 @@ const pageSize = 10;
 // Get a page
 router.get("/", (req, res) => {
   const offset = pageSize * req.query.page - pageSize;
+  const search = req.query.search;
+
+  let searchCondition = {};
+
+  console.log(search);
+  if (search && search !== "null" && search !== "") {
+    searchCondition = {
+      [Op.or]: [
+        // Case insensitive search based on station names, can be departure or return station
+        { departure_station_name: { [Op.iLike]: `%${search}%` } },
+        { return_station_name: { [Op.iLike]: `%${search}%` } },
+      ],
+    };
+  }
 
   Journey.findAll({
+    where: searchCondition,
     limit: pageSize,
     offset: offset,
     order: db.col("departure"),

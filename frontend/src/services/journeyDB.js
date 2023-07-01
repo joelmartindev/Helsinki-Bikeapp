@@ -4,11 +4,17 @@ if (import.meta.env.DEV) baseURL = import.meta.env.VITE_BASE_URL;
 
 let controller = new AbortController();
 
-const getPage = async (page) => {
+const getPage = async (page, options) => {
+  const search = options.search;
+
   try {
-    const response = await fetch(`${baseURL}/api/journeys?page=${page}`, {
-      signal: controller.signal,
-    });
+    const response = await fetch(
+      `${baseURL}/api/journeys?page=${page}&search=${search}`,
+      {
+        signal: controller.signal,
+      }
+    );
+
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
