@@ -16,30 +16,30 @@ export default {
       keyframes: {
         "triangle-short": {
           from: {
-            transform: "translate(0px, 5px)",
+            transform: "translate(0px, 8px)",
           },
           "50%": {
             transform: "translate(130px, 10px)",
           },
           "75%": {
-            transform: "translate(90px, 0px)",
+            transform: "translate(90px, 5px)",
           },
           to: {
-            transform: "translate(0px, 5px)",
+            transform: "translate(0px, 8px)",
           },
         },
         "triangle-long": {
           from: {
-            transform: "translate(0px, 10px)",
+            transform: "translate(0px, 18px)",
           },
           "50%": {
-            transform: "translate(180px, 15px)",
+            transform: "translate(180px, 22px)",
           },
           "70%": {
-            transform: "translate(140px, 5px)",
+            transform: "translate(140px, 16px)",
           },
           to: {
-            transform: "translate(0px, 10px)",
+            transform: "translate(0px, 18px)",
           },
         },
       },
