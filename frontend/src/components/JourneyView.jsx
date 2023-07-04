@@ -8,21 +8,19 @@ import PageNavigation from "./PageNavigation";
 import Search from "./Search";
 
 const JourneyView = () => {
-  const { journeys, setJourneys, totalPages } = useContext(JourneysContext);
-  const [options, setOptions] = useState({ search: null });
+  const { journeys, setJourneys, options, setOptions, totalPages } =
+    useContext(JourneysContext);
   const [search, setSearch] = useSearchParams();
 
-  let currentPage = Number.parseInt(search.get("page"));
-  currentPage = isNaN(currentPage) ? 1 : currentPage;
+  let currentPage = options.page;
+  currentPage = currentPage === null ? 1 : currentPage;
 
   const updatePage = async (direction) => {
     // Get query parameters
-    let page = Number.parseInt(search.get("page"));
-    db.cancelRequests();
+    let page = options.page;
 
     // Update page number
-    // If empty query
-    if (isNaN(page)) {
+    if (page === 1) {
       if (direction === "back") {
         //No page 0
         return;
@@ -32,53 +30,103 @@ const JourneyView = () => {
     } else {
       // If going back, decrement page
       if (direction === "back") {
-        if (page !== 1) {
-          page--;
-        } else return;
+        page--;
       } else {
         page++; // Otherwise, increment page
       }
     }
 
-    // Add query parameters to url
-    setSearch({ page });
+    // Add query parameters to url and options
+    if (options.search) {
+      setSearch({
+        page: page,
+        search: options.search,
+      });
+    } else {
+      setSearch({
+        page: page,
+      });
+    }
 
-    // Clean state to show loading animation
-    setJourneys(null);
-
-    // Fetch and set data
-    const res = await db.getPage(page, options);
-    const formatted = formatJourneys(res);
-    console.log(formatted);
-    setJourneys(formatted);
+    setOptions((prevState) => ({
+      ...prevState,
+      page,
+    }));
   };
 
-  // Fetch current page
+  // Update the search property in options
+  const updateSearch = (newSearch) => {
+    setSearch({ page: options.page, search: newSearch });
+    setOptions((prevState) => ({
+      ...prevState,
+      search: newSearch,
+      page: 1,
+    }));
+  };
+
+  // Fetch current page and fetch a new one when options change
   useEffect(() => {
     const fetchData = async () => {
+      // Clean state to show loading animation
       setJourneys(null);
-      const page = Number.parseInt(search.get("page"));
+
+      // Cancel previous fetches
+      db.cancelRequests();
+
+      let page = Number.parseInt(search.get("page"));
       let journeys;
 
-      if (isNaN(page)) {
-        journeys = await db.getPage(1, options);
-      } else {
-        journeys = await db.getPage(page, options);
+      // If no page in query or options, set page 1 in options
+      if (isNaN(page) && options.page === null) {
+        page = 1;
+
+        setOptions((prevState) => ({
+          ...prevState,
+          page,
+        }));
+
+        return;
       }
+
+      // If page is in query but not in options yet
+      if (options.page === null) {
+        const page = search.get("page");
+
+        if (search.has("search")) {
+          setOptions((prevState) => ({
+            ...prevState,
+            page,
+            search: search.get("search"),
+          }));
+        } else {
+          setOptions((prevState) => ({
+            ...prevState,
+            page,
+          }));
+        }
+
+        return;
+      }
+
+      // Display query parameters from options
+      if (options.search && options.page) {
+        setSearch({
+          page: options.page,
+          search: options.search,
+        });
+      } else if (options.search) {
+        setSearch({ search: options.search });
+      } else if (options.page > 1) {
+        setSearch({ page: options.page });
+      }
+
+      journeys = await db.getPage(options);
       const formatted = formatJourneys(journeys);
       setJourneys(formatted);
     };
 
     fetchData();
   }, [options]);
-
-  // Update the search property in options
-  const updateSearch = (newSearch) => {
-    setOptions((prevState) => ({
-      ...prevState,
-      search: newSearch,
-    }));
-  };
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col">

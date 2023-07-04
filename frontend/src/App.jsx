@@ -17,6 +17,11 @@ const App = () => {
   const [stations, setStations] = useState(null);
   const [journeys, setJourneys] = useState(null);
 
+  const [journeyOptions, setJourneyOptions] = useState({
+    page: null,
+    search: null,
+  });
+
   const [totalJourneyPages, setTotalJourneyPages] = useState(null);
   const [totalStationPages, setTotalStationPages] = useState(null);
 
@@ -48,6 +53,8 @@ const App = () => {
               <JourneysContextLayout
                 journeys={journeys}
                 setJourneys={setJourneys}
+                options={journeyOptions}
+                setOptions={setJourneyOptions}
                 totalPages={totalJourneyPages}
               />
             }

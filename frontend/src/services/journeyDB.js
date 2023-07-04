@@ -4,7 +4,8 @@ if (import.meta.env.DEV) baseURL = import.meta.env.VITE_BASE_URL;
 
 let controller = new AbortController();
 
-const getPage = async (page, options) => {
+const getPage = async (options) => {
+  const page = options.page;
   const search = options.search;
 
   try {
