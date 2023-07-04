@@ -38,7 +38,13 @@ const SingleJourney = () => {
         journey.return_station_id
       );
 
-      const stations = result.stations;
+      let stations = result.stations;
+
+      // Check if stations in correct order
+      if (stations[0].id !== journey.departure_station_id) {
+        [stations[0], stations[1]] = [stations[1], stations[0]];
+      }
+
       setJourneyStations(stations);
     };
 
