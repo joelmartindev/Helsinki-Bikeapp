@@ -22,17 +22,7 @@ const App = () => {
     search: null,
   });
 
-  const [totalJourneyPages, setTotalJourneyPages] = useState(null);
   const [totalStationPages, setTotalStationPages] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await journeyDB.getTotalPages();
-      setTotalJourneyPages(result.totalPages);
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,7 +45,6 @@ const App = () => {
                 setJourneys={setJourneys}
                 options={journeyOptions}
                 setOptions={setJourneyOptions}
-                totalPages={totalJourneyPages}
               />
             }
           >

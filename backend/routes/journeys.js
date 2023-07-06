@@ -13,7 +13,6 @@ router.get("/", (req, res) => {
 
   let searchCondition = {};
 
-  console.log(search);
   if (search && search !== "null" && search !== "") {
     searchCondition = {
       [Op.or]: [
@@ -37,9 +36,32 @@ router.get("/", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-// Get total number of pages
+// Get total number of pages with default options
 router.get("/totalPages", (req, res) => {
   Journey.count()
+    .then((countedJourneys) => {
+      let totalPages = countedJourneys / pageSize;
+      totalPages = Math.ceil(totalPages);
+      res.status(200).json({ totalPages });
+    })
+    .catch((err) => console.log(err));
+});
+
+// Get total number of available pages with given options
+router.get("/availablePages", (req, res) => {
+  const search = req.query.search;
+
+  searchCondition = {
+    [Op.or]: [
+      // Case insensitive search based on station names, can be departure or return station
+      { departure_station_name: { [Op.iLike]: `%${search}%` } },
+      { return_station_name: { [Op.iLike]: `%${search}%` } },
+    ],
+  };
+
+  Journey.count({
+    where: searchCondition,
+  })
     .then((countedJourneys) => {
       let totalPages = countedJourneys / pageSize;
       totalPages = Math.ceil(totalPages);

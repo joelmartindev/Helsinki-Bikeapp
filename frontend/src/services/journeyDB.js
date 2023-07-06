@@ -37,6 +37,18 @@ const getTotalPages = async () => {
   }
 };
 
+const getAvailablePages = async (search) => {
+  try {
+    const response = await fetch(
+      `${baseURL}/api/journeys/availablePages?search=${search}`
+    );
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const getJourney = async (id) => {
   try {
     const response = await fetch(`${baseURL}/api/journeys/${id}`);
@@ -57,4 +69,5 @@ export default {
   getTotalPages,
   cancelRequests,
   getJourney,
+  getAvailablePages,
 };

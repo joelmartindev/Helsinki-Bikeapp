@@ -8,13 +8,19 @@ import PageNavigation from "./PageNavigation";
 import Search from "./Search";
 
 const JourneyView = () => {
-  const { journeys, setJourneys, options, setOptions, totalPages } =
+  const { journeys, setJourneys, options, setOptions } =
     useContext(JourneysContext);
   const [search, setSearch] = useSearchParams();
+  const [totalPages, setTotalPages] = useState(null);
+  const [availablePages, setAvailablePages] = useState({
+    search: null,
+    pages: null,
+  });
 
   let currentPage = options.page;
   currentPage = currentPage === null ? 1 : currentPage;
 
+  // Next or back navigation button pressed
   const updatePage = async (direction) => {
     // Get query parameters
     let page = options.page;
@@ -57,11 +63,43 @@ const JourneyView = () => {
   // Update the search property in options
   const updateSearch = (newSearch) => {
     setSearch({ page: options.page, search: newSearch });
-    setOptions((prevState) => ({
-      ...prevState,
-      search: newSearch,
-      page: 1,
-    }));
+    if (newSearch === "") {
+      setOptions((prevState) => ({
+        ...prevState,
+        search: null,
+        page: 1,
+      }));
+    } else {
+      setOptions((prevState) => ({
+        ...prevState,
+        search: newSearch,
+        page: 1,
+      }));
+    }
+  };
+
+  // Fetch total pages when viewing all journeys
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await db.getTotalPages();
+      setTotalPages(result.totalPages);
+    };
+
+    fetchData();
+  }, []);
+
+  // Get total pages available with current options; get only when a search has been done
+  const fetchAvailablePages = async () => {
+    if (options.search === null) {
+      console.log("Default options used");
+      setAvailablePages({ search: null, pages: null });
+    } else if (availablePages.search === options.search) {
+      // Search has not changed
+      return;
+    } else {
+      const result = await db.getAvailablePages(options.search);
+      setAvailablePages({ search: options.search, pages: result.totalPages });
+    }
   };
 
   // Fetch current page and fetch a new one when options change
@@ -126,6 +164,7 @@ const JourneyView = () => {
     };
 
     fetchData();
+    fetchAvailablePages();
   }, [options]);
 
   return (
@@ -141,6 +180,7 @@ const JourneyView = () => {
       <PageNavigation
         updatePage={updatePage}
         totalPages={totalPages}
+        availablePages={availablePages.pages}
         currentPage={currentPage}
       />
       <JourneyList />

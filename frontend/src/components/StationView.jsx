@@ -70,6 +70,7 @@ const StationView = () => {
       <PageNavigation
         updatePage={updatePage}
         totalPages={totalPages}
+        availablePages={null}
         currentPage={currentPage}
       />
       <StationList />

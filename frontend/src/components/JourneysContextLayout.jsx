@@ -6,11 +6,10 @@ const JourneysContextLayout = ({
   setJourneys,
   options,
   setOptions,
-  totalPages,
 }) => {
   return (
     <JourneysContext.Provider
-      value={{ journeys, setJourneys, options, setOptions, totalPages }}
+      value={{ journeys, setJourneys, options, setOptions }}
     >
       <Outlet />
     </JourneysContext.Provider>
