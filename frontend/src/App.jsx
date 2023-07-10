@@ -1,8 +1,6 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import stationDB from "./services/stationDB";
-import journeyDB from "./services/journeyDB";
 import RootLayout from "./components/RootLayout";
 import JourneysContextLayout from "./components/JourneysContextLayout";
 import StationsContextLayout from "./components/StationsContextLayout";
@@ -22,16 +20,10 @@ const App = () => {
     search: null,
   });
 
-  const [totalStationPages, setTotalStationPages] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await stationDB.getTotalPages();
-      setTotalStationPages(result.totalPages);
-    };
-
-    fetchData();
-  }, []);
+  const [stationOptions, setStationOptions] = useState({
+    page: null,
+    search: null,
+  });
 
   return (
     <>
@@ -56,7 +48,8 @@ const App = () => {
               <StationsContextLayout
                 stations={stations}
                 setStations={setStations}
-                totalPages={totalStationPages}
+                options={stationOptions}
+                setOptions={setStationOptions}
               />
             }
           >

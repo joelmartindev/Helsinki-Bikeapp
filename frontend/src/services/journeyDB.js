@@ -67,7 +67,7 @@ const cancelRequests = () => {
 export default {
   getPage,
   getTotalPages,
-  cancelRequests,
   getJourney,
   getAvailablePages,
+  cancelRequests,
 };

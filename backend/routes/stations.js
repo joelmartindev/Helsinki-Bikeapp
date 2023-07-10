@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { Op } = require("sequelize");
 const db = require("../utils/dbConfig");
 const { Station } = require("../models/Station");
 const { Journey } = require("../models/Journey");
@@ -9,8 +10,26 @@ const pageSize = 10;
 // Get a page
 router.get("/", (req, res) => {
   const offset = pageSize * req.query.page - pageSize;
+  const search = req.query.search;
 
-  Station.findAll({ limit: pageSize, offset: offset, order: db.col("id") })
+  let searchCondition = {};
+
+  if (search && search !== "null" && search !== "") {
+    searchCondition = {
+      [Op.or]: [
+        // Case insensitive search based on station names, can be departure or return station
+        { name_fi: { [Op.iLike]: `%${search}%` } },
+        { address_fi: { [Op.iLike]: `%${search}%` } },
+      ],
+    };
+  }
+
+  Station.findAll({
+    where: searchCondition,
+    limit: pageSize,
+    offset: offset,
+    order: db.col("id"),
+  })
     .then((stations) => {
       console.log(stations);
       res.status(200).json(stations);
@@ -33,6 +52,29 @@ router.get("/totalPages", (req, res) => {
   Station.count()
     .then((totalRows) => {
       const totalPages = Math.ceil(totalRows / pageSize);
+      res.status(200).json({ totalPages });
+    })
+    .catch((err) => console.log(err));
+});
+
+// Get total number of available pages with given options
+router.get("/availablePages", (req, res) => {
+  const search = req.query.search;
+
+  searchCondition = {
+    [Op.or]: [
+      // Case insensitive search based on station names, can be departure or return station
+      { name_fi: { [Op.iLike]: `%${search}%` } },
+      { address_fi: { [Op.iLike]: `%${search}%` } },
+    ],
+  };
+
+  Station.count({
+    where: searchCondition,
+  })
+    .then((countedJourneys) => {
+      let totalPages = countedJourneys / pageSize;
+      totalPages = Math.ceil(totalPages);
       res.status(200).json({ totalPages });
     })
     .catch((err) => console.log(err));

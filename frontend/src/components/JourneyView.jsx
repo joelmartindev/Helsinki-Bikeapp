@@ -8,9 +8,9 @@ import PageNavigation from "./PageNavigation";
 import Search from "./Search";
 
 const JourneyView = () => {
+  const [search, setSearch] = useSearchParams();
   const { journeys, setJourneys, options, setOptions } =
     useContext(JourneysContext);
-  const [search, setSearch] = useSearchParams();
   const [totalPages, setTotalPages] = useState(null);
   const [availablePages, setAvailablePages] = useState({
     search: null,
@@ -22,7 +22,6 @@ const JourneyView = () => {
 
   // Next or back navigation button pressed
   const updatePage = async (direction) => {
-    // Get query parameters
     let page = options.page;
 
     // Update page number
@@ -90,7 +89,7 @@ const JourneyView = () => {
 
   // Get total pages available with current options; get only when a search has been done
   const fetchAvailablePages = async () => {
-    if (options.search === null) {
+    if (options.search === null || options.search === "null") {
       console.log("Default options used");
       setAvailablePages({ search: null, pages: null });
     } else if (availablePages.search === options.search) {
@@ -173,7 +172,7 @@ const JourneyView = () => {
         Journeys
       </h1>
       <Search
-        placeholder={"Search journeys"}
+        placeholder={"Search station names"}
         stateSetter={setJourneys}
         searchSetter={updateSearch}
       />

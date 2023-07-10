@@ -2,8 +2,18 @@
 let baseURL = "";
 if (import.meta.env.DEV) baseURL = import.meta.env.VITE_BASE_URL;
 
-const getPage = async (page) => {
-  const response = await fetch(`${baseURL}/api/stations?page=${page}`);
+let controller = new AbortController();
+
+const getPage = async (options) => {
+  const page = options.page;
+  const search = options.search;
+
+  const response = await fetch(
+    `${baseURL}/api/stations?page=${page}&search=${search}`,
+    {
+      signal: controller.signal,
+    }
+  );
   const jsonData = await response.json();
   return jsonData;
 };
@@ -17,6 +27,18 @@ const getTotalJourneys = async (id) => {
 const getTotalPages = async () => {
   try {
     const response = await fetch(`${baseURL}/api/stations/totalPages`);
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getAvailablePages = async (search) => {
+  try {
+    const response = await fetch(
+      `${baseURL}/api/stations/availablePages?search=${search}`
+    );
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
@@ -52,11 +74,18 @@ const getAll = async () => {
   return jsonData;
 };
 
+const cancelRequests = () => {
+  controller.abort();
+  controller = new AbortController();
+};
+
 export default {
   getPage,
   getTotalJourneys,
   getTotalPages,
+  getAvailablePages,
   getStation,
   getTwoStations,
   getAll,
+  cancelRequests,
 };
