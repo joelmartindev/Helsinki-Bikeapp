@@ -4,8 +4,9 @@ import { ReactComponent as Loading } from "../assets/loading.svg";
 import { ReactComponent as Arrow } from "../assets/arrow.svg";
 import { ReactComponent as Location } from "../assets/location.svg";
 import { ReactComponent as Capacity } from "../assets/capacity.svg";
-import StationsContext from "./StationsContext";
 import stationDB from "../services/stationDB";
+import StationsContext from "./StationsContext";
+import StationStats from "./StationStats";
 import Map from "./Map";
 
 const SingleStation = () => {
@@ -13,7 +14,6 @@ const SingleStation = () => {
   const id = Number(useParams("id").id);
   const { stations } = useContext(StationsContext);
   const [station, setStation] = useState(null);
-  const [totalJourneys, setTotalJourneys] = useState(null);
 
   const fetchStation = async () => {
     const result = await stationDB.getStation(id);
@@ -24,15 +24,6 @@ const SingleStation = () => {
     if (stations === null) {
       fetchStation();
     }
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await stationDB.getTotalJourneys(id);
-      setTotalJourneys(res);
-    };
-
-    fetchData();
   }, []);
 
   // If no stations in memory
@@ -87,14 +78,7 @@ const SingleStation = () => {
             <h1 className="mt-2 font-bold text-custom-text underline underline-offset-4">
               Statistics
             </h1>
-            {totalJourneys === null ? (
-              <Loading className="h-12 w-12" />
-            ) : (
-              <>
-                <div>Departures {totalJourneys.departuresCount}</div>
-                <div>Returns {totalJourneys.returnsCount}</div>
-              </>
-            )}
+            <StationStats />
             <h1 className="my-2 font-bold text-custom-text underline underline-offset-4">
               Map
             </h1>
