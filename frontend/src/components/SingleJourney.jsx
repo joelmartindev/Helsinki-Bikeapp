@@ -5,7 +5,7 @@ import { ReactComponent as Arrow } from "../assets/arrow.svg";
 import { ReactComponent as Link } from "../assets/link.svg";
 import journeyDB from "../services/journeyDB";
 import stationDB from "../services/stationDB";
-import formatJourneys from "../utils/journeyUtils";
+import { formatJourneys } from "../utils/journeyUtils";
 import JourneysContext from "./JourneysContext";
 import Map from "./Map";
 

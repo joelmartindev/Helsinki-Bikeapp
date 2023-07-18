@@ -59,6 +59,12 @@ const getJourney = async (id) => {
   }
 };
 
+const getAllRelatedToStation = async (id) => {
+  const response = await fetch(`${baseURL}/api/journeys/related?id=${id}`);
+  const jsonData = await response.json();
+  return jsonData;
+};
+
 const cancelRequests = () => {
   controller.abort();
   controller = new AbortController();
@@ -69,5 +75,6 @@ export default {
   getTotalPages,
   getJourney,
   getAvailablePages,
+  getAllRelatedToStation,
   cancelRequests,
 };

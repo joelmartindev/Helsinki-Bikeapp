@@ -36,6 +36,33 @@ router.get("/", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+// Get all journeys related to an id (data for statistics in single station view)
+router.get("/related", (req, res) => {
+  const id = req.query.id;
+
+  let searchCondition = {
+    [Op.or]: [
+      { departure_station_id: { [Op.eq]: id } },
+      { return_station_id: { [Op.eq]: id } },
+    ],
+  };
+
+  Journey.findAll({
+    attributes: [
+      "departure",
+      "return",
+      "departure_station_id",
+      "return_station_id",
+    ],
+    where: searchCondition,
+  })
+    .then((journeys) => {
+      console.log(journeys);
+      res.status(200).json(journeys);
+    })
+    .catch((err) => console.log(err));
+});
+
 // Get total number of pages with default options
 router.get("/totalPages", (req, res) => {
   Journey.count()

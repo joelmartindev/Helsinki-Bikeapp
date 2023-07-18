@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import db from "../services/journeyDB";
-import formatJourneys from "../utils/journeyUtils";
+import { formatJourneys } from "../utils/journeyUtils";
 import JourneysContext from "./JourneysContext";
 import JourneyList from "./JourneyList";
 import PageNavigation from "./PageNavigation";
