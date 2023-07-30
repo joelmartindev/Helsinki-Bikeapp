@@ -11,9 +11,10 @@ import Map from "./Map";
 
 const SingleStation = () => {
   const navigate = useNavigate();
-  const id = Number(useParams("id").id);
   const { stations } = useContext(StationsContext);
   const [station, setStation] = useState(null);
+
+  const id = Number(useParams("id").id);
 
   const fetchStation = async () => {
     const result = await stationDB.getStation(id);
@@ -24,7 +25,7 @@ const SingleStation = () => {
     if (stations === null) {
       fetchStation();
     }
-  }, []);
+  }, [id]);
 
   // If no stations in memory
   if (stations === null) {
@@ -61,28 +62,22 @@ const SingleStation = () => {
             <div className="mb-2 border-b-2 border-custom-pigment-green font-mono text-3xl font-bold text-neutral-500">
               Station #{id}: {station.name_fi}
             </div>
-            <h1 className="font-bold text-custom-text underline underline-offset-4">
-              Details
-            </h1>
-            <div className="flex items-center italic">
+            <div className="mt-4 flex items-center italic">
               <Location className="mr-2 h-5 w-5" />
               {station.address_fi}
             </div>
             {station.city === "" ? null : (
               <div className="ml-7">{station.city}</div>
             )}
-            <div className="flex items-center italic">
+            <div className="mb-4 flex items-center italic">
               <Capacity className="mr-2 h-5 w-5" />
               Capacity {station.capacity}
             </div>
-            <h1 className="mt-2 font-bold text-custom-text underline underline-offset-4">
-              Statistics
-            </h1>
-            <StationStats />
-            <h1 className="my-2 font-bold text-custom-text underline underline-offset-4">
-              Map
-            </h1>
             <Map stations={[station]} />
+            <h2 className="mt-2 font-bold text-custom-text underline underline-offset-4">
+              Statistics
+            </h2>
+            <StationStats />
           </div>
         </div>
       </div>

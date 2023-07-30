@@ -52,7 +52,9 @@ router.get("/related", (req, res) => {
       "departure",
       "return",
       "departure_station_id",
+      "departure_station_name",
       "return_station_id",
+      "return_station_name",
     ],
     where: searchCondition,
   })

@@ -1,10 +1,26 @@
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import { Link } from "react-router-dom";
 
-const Map = ({ stations, height }) => {
+const Map = ({ stations }) => {
+  const center =
+    stations.length > 2
+      ? ["60.1710558", "24.9415421"] // Explore view, center on Central Railway Station
+      : [stations[0].coord_y, stations[0].coord_x]; // Single station or single journey view
+
+  const zoom =
+    stations.length > 2
+      ? 13 // Explore view
+      : 17; // Single station or single journey view
+
+  const UpdateCenter = ({ center }) => {
+    const map = useMap();
+    map.setView(center);
+    return null;
+  };
+
   return (
     <div
       id="map-container"
@@ -15,18 +31,11 @@ const Map = ({ stations, height }) => {
       }
     >
       <MapContainer
-        center={
-          stations.length > 2
-            ? ["60.1710558", "24.9415421"] // Explore view, center on Central Railway Station
-            : [stations[0].coord_y, stations[0].coord_x] // Single station or single journey view
-        }
-        zoom={
-          stations.length > 2
-            ? 13 // Explore view
-            : 17 // Single station or single journey view
-        }
+        center={center}
+        zoom={zoom}
         style={{ width: "100%", height: "100%" }}
       >
+        <UpdateCenter center={center} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

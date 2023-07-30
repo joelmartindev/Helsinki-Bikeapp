@@ -1,3 +1,4 @@
+// Format data into a more readable type
 const formatJourneys = (unformatted) => {
   let formatted = [];
 
@@ -18,8 +19,8 @@ const formatJourneys = (unformatted) => {
   return formatted;
 };
 
-// For statistics in single station view
-const formatStatsData = (data, id) => {
+// For bar graph statistics in single station view
+const formatBarData = (data, id) => {
   // Filter journeys into departures and returns based on the given station ID
   const departures = data.filter(
     (journey) => journey.departure_station_id === id
@@ -62,6 +63,65 @@ const formatStatsData = (data, id) => {
   return { weeklyDepartures, weeklyReturns };
 };
 
+const formatTop5Journeys = (journeys, currentStationId) => {
+  // Filter journeys where the current station is the starting point (departure)
+  const departureJourneys = journeys.filter(
+    (journey) => journey.departure_station_id === currentStationId
+  );
+
+  // Go through every journey departing from current station, add +1 to the destination stations count
+  const destinationCounts = departureJourneys.reduce((counts, journey) => {
+    // Get the ID of the destination station for the current journey
+    const destinationStationId = journey.return_station_id;
+    // Increment the count for the destination station by 1
+    counts[destinationStationId] = (counts[destinationStationId] || 0) + 1;
+    return counts;
+  }, {});
+
+  // Sort destinations based on count in descending order, select top 5, create object with id, name and count
+  const top5MostDepartures = Object.entries(destinationCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([destinationId, count]) => {
+      const journey = journeys.find(
+        (journey) => journey.return_station_id == destinationId
+      );
+      const name = journey.return_station_name;
+      return { id: destinationId, name, count };
+    });
+
+  // Filter journeys where the current station is the return station (end of journey)
+  const returnJourneys = journeys.filter(
+    (journey) => journey.return_station_id === currentStationId
+  );
+
+  // Go through every journey stopping at current station, add +1 to the departure stations count
+  const returnCounts = returnJourneys.reduce((counts, journey) => {
+    // Get the ID of the departure station for the current journey
+    const departureStationId = journey.departure_station_id;
+    // Increment the count for the departure station by 1
+    counts[departureStationId] = (counts[departureStationId] || 0) + 1;
+    return counts;
+  }, {});
+
+  // Sort returns based on count in descending order, select top 5, create object with id, name and count
+  const top5MostReturns = Object.entries(returnCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([destinationId, count]) => {
+      const journey = journeys.find(
+        (journey) => journey.departure_station_id == destinationId
+      );
+      const name = journey.departure_station_name;
+      return { id: destinationId, name, count };
+    });
+
+  return {
+    top5MostDepartures,
+    top5MostReturns,
+  };
+};
+
 const formatDate = (date) => {
   return new Date(date).toLocaleDateString("en-gb", {
     year: "numeric",
@@ -78,4 +138,4 @@ const formatTime = (s) => {
   return (s - (s %= 60)) / 60 + (9 < s ? "m" : "m0") + s + "s";
 };
 
-export { formatJourneys, formatStatsData };
+export { formatJourneys, formatBarData, formatTop5Journeys };
