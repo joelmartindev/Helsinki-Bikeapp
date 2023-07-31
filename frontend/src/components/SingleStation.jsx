@@ -24,6 +24,8 @@ const SingleStation = () => {
   useEffect(() => {
     if (stations === null) {
       fetchStation();
+    } else if (station?.id !== id) {
+      fetchStation();
     }
   }, [id]);
 
