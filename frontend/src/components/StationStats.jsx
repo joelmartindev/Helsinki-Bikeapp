@@ -21,6 +21,7 @@ const StationStats = () => {
     };
 
     fetchData();
+    setTotalJourneys(null);
   }, [id]);
 
   // Fetch related journeys data for bar graph
@@ -33,6 +34,8 @@ const StationStats = () => {
     };
 
     fetchData();
+    setRelatedJourneys(null);
+    setBarData(null);
   }, [id]);
 
   // Format top 5 journeys (most/least common where station is departure/return)
@@ -40,7 +43,7 @@ const StationStats = () => {
     if (relatedJourneys) {
       const formatted = formatTop5Journeys(relatedJourneys, id);
       setTop5Journeys(formatted);
-    }
+    } else setTop5Journeys(null);
   }, [relatedJourneys]);
 
   // Labels Week 1 - Week 14
