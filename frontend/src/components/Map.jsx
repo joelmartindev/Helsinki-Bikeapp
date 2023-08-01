@@ -3,6 +3,9 @@ import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import { Link } from "react-router-dom";
+import { ReactComponent as Location } from "../assets/location.svg";
+import { ReactComponent as Capacity } from "../assets/capacity.svg";
+import { ReactComponent as LinkSvg } from "../assets/link.svg";
 
 const Map = ({ stations }) => {
   const center =
@@ -54,7 +57,23 @@ const Map = ({ stations }) => {
               }
             >
               <Popup>
-                <Link to={`/stations/${station.id}`}>{station.name_fi}</Link>
+                <h1 className="text-3xl font-semibold">{station.name_fi}</h1>
+                <div className="text mt-2 flex italic">
+                  <Location className="mr-1 h-4 w-4" />
+                  <div className="text-sm">{station.address_fi}</div>
+                </div>
+                <div className="text mt-1 flex italic">
+                  <Capacity className="mr-1 h-4 w-4" />
+                  <div className="text-sm">Capacity {station.capacity}</div>
+                </div>
+                <Link to={`/stations/${station.id}`}>
+                  <div className="flex items-center">
+                    <div className="mr-1 mt-1 text-base font-semibold">
+                      Go to station
+                    </div>
+                    <LinkSvg className="h-4 w-4" />
+                  </div>
+                </Link>
               </Popup>
             </Marker>
           );
