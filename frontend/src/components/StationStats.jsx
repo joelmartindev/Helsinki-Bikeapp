@@ -57,29 +57,29 @@ const StationStats = () => {
   return (
     <>
       {totalJourneys && (
-        <>
+        <div className="mt-2">
           <div>Departures: {totalJourneys.departuresCount}</div>
           <div>Returns: {totalJourneys.returnsCount}</div>
-        </>
+        </div>
       )}
       {top5Journeys && (
         <div className="sm:flex">
           <div>
-            <h2 className="mt-3 border-l-4 border-custom-pigment-green px-2">
-              Most departures
+            <h2 className="mt-4 border-l-4 border-custom-pigment-green px-2">
+              Most departures to
             </h2>
             <ol className="list-decimal">
               {top5Journeys.top5MostDepartures.map((destination) => {
                 return (
                   <li
                     key={destination.id}
-                    className="my-1 list-inside pl-3 text-xl"
+                    className="my-2 ml-10 list-inside px-1 -indent-8 font-mono text-lg"
                   >
                     <Link
                       to={`/stations/${destination.id}`}
                       className="hover:text-custom-pigment-green"
                     >
-                      {destination.count + " to " + destination.name}
+                      {destination.name + ": " + destination.count}
                     </Link>
                   </li>
                 );
@@ -88,20 +88,20 @@ const StationStats = () => {
           </div>
           <div>
             <h2 className="mt-3 border-l-4 border-pink-300 px-2">
-              Most returns
+              Most returns from
             </h2>
             <ol className="list-decimal">
               {top5Journeys.top5MostReturns.map((returnItem) => {
                 return (
                   <li
                     key={returnItem.id}
-                    className="my-1 list-inside pl-3 text-xl"
+                    className="my-2 ml-10 list-inside px-1 -indent-8 font-mono text-lg"
                   >
                     <Link
                       to={`/stations/${returnItem.id}`}
                       className="hover:text-custom-pigment-green"
                     >
-                      {returnItem.count + " from  " + returnItem.name}
+                      {returnItem.name + ": " + returnItem.count}
                     </Link>
                   </li>
                 );

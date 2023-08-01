@@ -76,8 +76,8 @@ const SingleStation = () => {
               Capacity {station.capacity}
             </div>
             <Map stations={[station]} />
-            <h2 className="mt-2 font-bold text-custom-text underline underline-offset-4">
-              Statistics
+            <h2 className="mt-3 font-bold text-custom-text underline underline-offset-4">
+              Station Statistics
             </h2>
             <StationStats />
           </div>
