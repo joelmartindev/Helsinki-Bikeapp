@@ -3,7 +3,7 @@
 City bikes as data!
 
 The goal of this project was to create both a frontend and a backend for a website and deploy it online as my first portfolio project. The website uses public data from the 2021 season of city bikes in Helsinki. It displays the various journeys, stations and statistics calculated based on the data.
-The inspiration for it came from the [Solita Dev Academy Pre-assignment](https://duckduckgo.com) where the data was provided along with some basic feature requests. They gave applicants free hands to choose their technology stack, so I chose to get more experience with the PERN stack: PostgreSQL, Express, React and Node.js.
+The inspiration for it came from the [Solita Dev Academy Pre-assignment](https://github.com/solita/dev-academy-2023-exercise) where the data was provided along with some basic feature requests. They gave applicants free hands to choose their technology stack, so I chose to gain more experience with React, Node.js, Express and PostgreSQL.
 
 The website is deployed at https://helsinkibikeapp.fly.dev/
 
@@ -52,14 +52,14 @@ Frontend:
 
 - JavaScript
   - Native Fetch (\*), since I've only used the Axios library before
-  - Animations (\*)
 - Vite (\*)
 - React
   - React ContextAPI (\*), since I tried to minimize prop drilling
 - React Router (\*)
 - Tailwind (\*)
-- Leaflet with React Leaflet
-- Chart.js with React-Chartjs-2
+  - CSS Animations (\*)
+- Leaflet with React Leaflet (\*)
+- Chart.js with React-Chartjs-2 (\*)
 
 Backend:
 
