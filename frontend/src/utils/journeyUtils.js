@@ -122,6 +122,47 @@ const formatTop5Journeys = (journeys, currentStationId) => {
   };
 };
 
+const countDistances = (journeys, currentStationId) => {
+  // Filter journeys where the current station is the starting point (departure)
+  const departureJourneys = journeys.filter(
+    (journey) => journey.departure_station_id === currentStationId
+  );
+
+  // Calculate total distance of all departure journeys
+  const totalDepartureDistance = departureJourneys.reduce((total, journey) => {
+    return total + Number(journey.covered_distance);
+  }, 0);
+
+  // Calculate average distance of departure journeys, convert from 1234 meters to 1.23
+  const averageDepartureDistance = (
+    totalDepartureDistance /
+    departureJourneys.length /
+    1000
+  ).toFixed(2);
+
+  // Filter journeys where the current station is the return station (end of journey)
+  const returnJourneys = journeys.filter(
+    (journey) => journey.return_station_id === currentStationId
+  );
+
+  // Calculate total distance of all return journeys
+  const totalReturnDistance = returnJourneys.reduce((total, journey) => {
+    return total + Number(journey.covered_distance);
+  }, 0);
+
+  // Calculate average distance of return journeys, convert from 1234 meters to 1.23
+  const averageReturnDistance = (
+    totalReturnDistance /
+    returnJourneys.length /
+    1000
+  ).toFixed(2);
+
+  return {
+    averageDepartureDistance,
+    averageReturnDistance,
+  };
+};
+
 const formatDate = (date) => {
   return new Date(date).toLocaleDateString("en-gb", {
     year: "numeric",
@@ -138,4 +179,4 @@ const formatTime = (s) => {
   return (s - (s %= 60)) / 60 + (9 < s ? "m" : "m0") + s + "s";
 };
 
-export { formatJourneys, formatBarData, formatTop5Journeys };
+export { formatJourneys, formatBarData, formatTop5Journeys, countDistances };

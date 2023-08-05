@@ -5,13 +5,18 @@ import { Bar } from "react-chartjs-2";
 import { ReactComponent as Loading } from "../assets/loading.svg";
 import stationDB from "../services/stationDB";
 import journeyDB from "../services/journeyDB";
-import { formatBarData, formatTop5Journeys } from "../utils/journeyUtils";
+import {
+  formatBarData,
+  formatTop5Journeys,
+  countDistances,
+} from "../utils/journeyUtils";
 
 const StationStats = () => {
   const [totalJourneys, setTotalJourneys] = useState(null);
   const [relatedJourneys, setRelatedJourneys] = useState(null);
   const [barData, setBarData] = useState(null);
   const [top5Journeys, setTop5Journeys] = useState(null);
+  const [distances, setDistances] = useState(null);
   const id = Number(useParams("id").id);
 
   useEffect(() => {
@@ -46,6 +51,14 @@ const StationStats = () => {
     } else setTop5Journeys(null);
   }, [relatedJourneys]);
 
+  // Count avg distances
+  useEffect(() => {
+    if (relatedJourneys) {
+      const distances = countDistances(relatedJourneys, id);
+      setDistances(distances);
+    } else setDistances(null);
+  }, [relatedJourneys]);
+
   // Labels Week 1 - Week 14
   const weekLabels = [];
   if (relatedJourneys) {
@@ -62,6 +75,17 @@ const StationStats = () => {
           <div>Returns: {totalJourneys.returnsCount}</div>
         </div>
       )}
+      {
+        // AVERAGE DISTANCE of journey starting or ending at station
+        distances && (
+          <>
+            <div>
+              Average departure: {distances.averageDepartureDistance} km
+            </div>
+            <div>Average return: {distances.averageReturnDistance} km</div>
+          </>
+        )
+      }
       {top5Journeys && (
         <div className="sm:flex">
           <div>

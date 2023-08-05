@@ -55,6 +55,7 @@ router.get("/related", (req, res) => {
       "departure_station_name",
       "return_station_id",
       "return_station_name",
+      "covered_distance",
     ],
     where: searchCondition,
   })
