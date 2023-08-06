@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const sequelize = require("sequelize");
 const { Op } = require("sequelize");
 const db = require("../utils/dbConfig");
 const { Journey } = require("../models/Journey");
@@ -96,6 +97,20 @@ router.get("/availablePages", (req, res) => {
       let totalPages = countedJourneys / pageSize;
       totalPages = Math.ceil(totalPages);
       res.status(200).json({ totalPages });
+    })
+    .catch((err) => console.log(err));
+});
+
+// Get average distance of all journeys
+router.get("/avgDistance", (req, res) => {
+  Journey.findAll({
+    attributes: [
+      [sequelize.fn("AVG", sequelize.col("covered_distance")), "average"],
+    ],
+  })
+    .then((data) => {
+      const averageJourneyDistance = Math.round(data[0].dataValues.average);
+      res.status(200).json({ averageJourneyDistance });
     })
     .catch((err) => console.log(err));
 });

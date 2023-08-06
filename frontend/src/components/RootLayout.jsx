@@ -22,9 +22,9 @@ const Layout = () => {
               Bikeapp
             </div>
           </Link>
-          <nav className="flex max-sm:flex-col">
+          <nav className="flex max-md:flex-col">
             <div
-              className="my-4 block px-4 text-lg font-semibold text-white sm:hidden"
+              className="my-4 block px-4 text-lg font-semibold text-white md:hidden"
               onClick={menuClick}
             >
               Menu
@@ -36,14 +36,14 @@ const Layout = () => {
                 activeTab == ""
                   ? "underline decoration-custom-pigment-green underline-offset-8"
                   : ""
-              } my-4 hidden px-4  text-xl font-semibold text-white sm:block`}
+              } my-4 hidden px-4  text-xl font-semibold text-white md:block`}
               onClick={menuClick}
             >
               Home
             </Link>
             <Link
               to="/explore"
-              className={`${isMenuOpen ? "block" : "max-sm:hidden"}
+              className={`${isMenuOpen ? "block" : "max-md:hidden"}
               ${
                 activeTab == "explore"
                   ? "underline decoration-custom-pigment-green underline-offset-8"
@@ -55,7 +55,7 @@ const Layout = () => {
             </Link>
             <Link
               to="/journeys"
-              className={`${isMenuOpen ? "max-sm:block" : "max-sm:hidden"}
+              className={`${isMenuOpen ? "max-md:block" : "max-md:hidden"}
               ${
                 activeTab == "journeys"
                   ? "underline decoration-custom-pigment-green underline-offset-8"
@@ -67,7 +67,7 @@ const Layout = () => {
             </Link>
             <Link
               to="/stations"
-              className={`${isMenuOpen ? "max-sm:block" : "max-sm:hidden"}
+              className={`${isMenuOpen ? "max-md:block" : "max-md:hidden"}
               ${
                 activeTab == "stations"
                   ? "underline decoration-custom-pigment-green underline-offset-8"
@@ -76,6 +76,18 @@ const Layout = () => {
               onClick={menuClick}
             >
               Stations
+            </Link>
+            <Link
+              to="/statistics"
+              className={`${isMenuOpen ? "max-md:block" : "max-md:hidden"}
+              ${
+                activeTab == "statistics"
+                  ? "underline decoration-custom-pigment-green underline-offset-8"
+                  : ""
+              } my-4 px-4 text-xl font-semibold text-white`}
+              onClick={menuClick}
+            >
+              Statistics
             </Link>
           </nav>
         </div>

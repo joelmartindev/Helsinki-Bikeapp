@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import RootLayout from "./components/RootLayout";
 import JourneysContextLayout from "./components/JourneysContextLayout";
@@ -10,6 +10,7 @@ import Explore from "./components/Explore";
 import StationView from "./components/StationView";
 import SingleStation from "./components/SingleStation";
 import SingleJourney from "./components/SingleJourney";
+import StatisticsView from "./components/StatisticsView";
 
 const App = () => {
   const [stations, setStations] = useState(null);
@@ -57,6 +58,7 @@ const App = () => {
             <Route path="/stations" element={<StationView />} />
             <Route path="/stations/:id" element={<SingleStation />} />
           </Route>
+          <Route path="/statistics" element={<StatisticsView />} />
         </Route>
       </Routes>
     </>

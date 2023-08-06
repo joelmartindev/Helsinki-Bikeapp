@@ -65,6 +65,21 @@ const getAllRelatedToStation = async (id) => {
   return jsonData;
 };
 
+const getAverageJourneyDistance = async () => {
+  const response = await fetch(`${baseURL}/api/journeys/avgDistance`);
+  const jsonData = await response.json();
+  return jsonData;
+};
+
+const getAllJourneyStats = async () => {
+  const { averageJourneyDistance } = await getAverageJourneyDistance();
+
+  // Add more stats
+  return {
+    averageJourneyDistance,
+  };
+};
+
 const cancelRequests = () => {
   controller.abort();
   controller = new AbortController();
@@ -76,5 +91,6 @@ export default {
   getJourney,
   getAvailablePages,
   getAllRelatedToStation,
+  getAllJourneyStats,
   cancelRequests,
 };
