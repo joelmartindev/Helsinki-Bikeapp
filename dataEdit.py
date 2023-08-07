@@ -3,7 +3,9 @@
 # Read the CSV file
 import pandas as pd
 
-df = pd.read_csv("path/to/file.csv", sep=",")
+df = pd.read_csv(
+    "path/to/file", sep=","
+)
 
 # Drop duplicate data
 df.drop_duplicates(subset=None, inplace=True)
@@ -25,5 +27,10 @@ filtered_df["Covered distance (m)"] = (
     .apply(lambda x: x.rstrip("0").rstrip("."))
 )
 
-# Write the filtered data to a new file
-filtered_df.to_csv("path/to/new_file.csv", index=False)
+# Sort based on timestamp
+sorted_df = filtered_df.sort_values(by='Departure')
+
+# Write the filtered and sorted data to a new file
+sorted_df.to_csv(
+    "path/to/new_file", index=False
+)
