@@ -7,6 +7,34 @@ The inspiration for it came from the [Solita Dev Academy Pre-assignment](https:/
 
 The website is deployed at https://helsinkibikeapp.fly.dev/
 
+## Technologies used
+
+When I started building a portfolio, I decided that every project should aim to use a language, library or a tool I'm unfamiliar with. This is to show that I'm capable of learning and willing to use new technologies. Many of the technologies here I've only used very little or have no experience with, so I've marked the new ones with (\*)!
+
+My aim was to also minimize the use of libraries to make sure I know the basics. I would have liked to try out Redux, Redux Toolkit or TanStack for example, but I'll save them for future projects.
+
+Frontend:
+
+- JavaScript
+  - Native Fetch (\*), since I've only used the Axios library before
+- Vite (\*)
+- React
+  - React ContextAPI (\*), since I tried to minimize prop drilling
+- React Router (\*)
+- Tailwind (\*)
+  - CSS Animations (\*)
+- Leaflet with React Leaflet (\*)
+- Chart.js with React-Chartjs-2 (\*)
+
+Backend:
+
+- Node.js
+- Express
+- PostgreSQL
+- Sequelize (\*)
+
+It's possible that I'll return to this project later on to practise making tests with Jest for example.
+
 ## Data
 
 The journey data, owned by City Bike Finland, is divided into 3 csv files.
@@ -40,32 +68,60 @@ The ready data was then moved to a PostgreSQL server online hosted by [Neon](htt
 
 While coding the website I went with the approach that assumed the data to be able to change at some point, even if in the end I didn't add an option for creating new data. This means all statistics data must be calculated everytime and is also calculated client side to keep the backend fast.
 
-ive changed UI based on observing how users use it, for example made some links more apparent because xxx
+## Features
 
-## Technologies used
+Through iteration, I've experimented with different styles and features for the project. I've changed the UI based on observing how users use it. For example: I made some links more apparent, because the user didn't seem to realize it was a link. I changed from a table style presentation of journeys and stations to a card based style. I added statistics for least popular stations and the results seemed to always have a list of ones, which is not interesting data so I removed it.
 
-When I started building a portfolio, I decided that every project should aim to use a language, library or a tool I'm unfamiliar with. This is to show that I'm capable of learning and willing to use new technologies. Many of the technologies here I've only used very little or have no experience with, so I've marked the new ones with a \*!
+### Explore View
 
-My aim was to also minimize the use of libraries to make sure I know the basics. I would have liked to try out Redux, Redux Toolkit or TanStack for example, but I'll save them for future projects.
+- Map of all stations
+- Map markers
+  - Basic info
+  - Link to the specific station
 
-Frontend:
+### Journeys View
 
-- JavaScript
-  - Native Fetch (\*), since I've only used the Axios library before
-- Vite (\*)
-- React
-  - React ContextAPI (\*), since I tried to minimize prop drilling
-- React Router (\*)
-- Tailwind (\*)
-  - CSS Animations (\*)
-- Leaflet with React Leaflet (\*)
-- Chart.js with React-Chartjs-2 (\*)
+- List of all journeys in a card format
+  - Each journey has a link to a detailed view
+- Pagination
+  - Page indicator shows how many pages available
+  - Indicator also works with searches
+- Search for station names
 
-Backend:
+#### Single Journey View
 
-- Node.js
-- Express
-- PostgreSQL
-- Sequelize (\*)
+- Journey details
+  - Start and endpoints with links
+  - Date and timestamps
+  - Distance and time of journey
+- Map
+  - Centered on the departure station
+  - Shows the return station as well
 
-It's possible that I'll return to this project later on to practise making tests with Jest for example.
+### Stations View
+
+- List of all stations in a card format
+  - Each station has a link to a detailed view
+- Pagination
+  - Page indicator shows how many pages available
+  - Indicator also works with searches
+- Search for station names or addresses
+
+#### Single Station View
+
+- Station details
+  - Address
+  - Capacity
+- Map
+  - Shows the current station
+- Statistics
+  - Total departures and returns made
+  - Average distance of departure and return journeys
+  - Top 5 destinations from this station and departures to this station
+    - Links to each station
+  - Bar graph of weekly journeys in the season
+
+### Statistics View
+
+- Under construction...
+- Average distance of all journeys
