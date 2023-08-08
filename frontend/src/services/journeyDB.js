@@ -65,18 +65,40 @@ const getAllRelatedToStation = async (id) => {
   return jsonData;
 };
 
-const getAverageJourneyDistance = async () => {
-  const response = await fetch(`${baseURL}/api/journeys/avgDistance`);
+const getStatsAverages = async () => {
+  const response = await fetch(`${baseURL}/api/journeys/statsAverages`);
+  const jsonData = await response.json();
+  return jsonData;
+};
+
+const getStatsLists = async () => {
+  const response = await fetch(`${baseURL}/api/journeys/statsLists`);
   const jsonData = await response.json();
   return jsonData;
 };
 
 const getAllJourneyStats = async () => {
-  const { averageJourneyDistance } = await getAverageJourneyDistance();
+  const { averageJourneyDistance, averageJourneyTime } =
+    await getStatsAverages();
 
-  // Add more stats
+  const {
+    longestJourneys,
+    mostPopularJourneys,
+    mostPopularStationsForDepartures,
+    leastPopularStationsForDepartures,
+    mostPopularStationsForReturns,
+    leastPopularStationsForReturns,
+  } = await getStatsLists();
+
   return {
     averageJourneyDistance,
+    averageJourneyTime,
+    longestJourneys,
+    mostPopularJourneys,
+    mostPopularStationsForDepartures,
+    leastPopularStationsForDepartures,
+    mostPopularStationsForReturns,
+    leastPopularStationsForReturns,
   };
 };
 

@@ -63,6 +63,8 @@ const formatBarData = (data, id) => {
   return { weeklyDepartures, weeklyReturns };
 };
 
+// NOTE: While making the Statistics view I've realized that this probably would have been better done in the backend through Sequelize, but I'm not going to refactor it.
+// formatBarData might have the same case.
 const formatTop5Journeys = (journeys, currentStationId) => {
   // Filter journeys where the current station is the starting point (departure)
   const departureJourneys = journeys.filter(
@@ -179,4 +181,10 @@ const formatTime = (s) => {
   return (s - (s %= 60)) / 60 + (9 < s ? "m" : "m0") + s + "s";
 };
 
-export { formatJourneys, formatBarData, formatTop5Journeys, countDistances };
+export {
+  formatJourneys,
+  formatBarData,
+  formatTime,
+  formatTop5Journeys,
+  countDistances,
+};

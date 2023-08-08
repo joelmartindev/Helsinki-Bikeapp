@@ -1,44 +1,67 @@
-import { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import StationsContext from "./StationsContext";
+import { useEffect, useState } from "react";
 import journeyDB from "../services/journeyDB";
+import { formatTime } from "../utils/journeyUtils";
+import { ReactComponent as Loading } from "../assets/loading.svg";
 
 const StatisticsView = () => {
   const [stats, setStats] = useState({
-    longestJourney: null, // lista
-    averageJourneyDistance: null, // arvo, pituus vai?
-    averageJourneyTime: null, // arvo, aika vai?
-    mostPopularStations: null, // lista
-    leastPopularStations: null, // lista
-    mostPopularJourneys: null, // lista
+    averageJourneyDistance: null,
+    averageJourneyTime: null,
+    longestJourneys: null,
+    mostPopularJourneys: null,
+    mostPopularStations: null,
+    leastPopularStations: null,
   });
 
-  // lisäksi graafeja, esim activity määrä bar graph tunneittain,
-
-  // Count avg distances
+  // Fetch all statistics related to journeys and stations
   useEffect(() => {
     const fetchData = async () => {
-      let { averageJourneyDistance } = await journeyDB.getAllJourneyStats();
-      averageJourneyDistance = (averageJourneyDistance / 1000).toFixed(2);
-      setStats((prevStats) => ({
-        ...prevStats,
+      let {
         averageJourneyDistance,
-      }));
+        averageJourneyTime,
+        longestJourneys,
+        mostPopularJourneys,
+        mostPopularStationsForDepartures,
+        leastPopularStationsForDepartures,
+        mostPopularStationsForReturns,
+        leastPopularStationsForReturns,
+      } = await journeyDB.getAllJourneyStats();
+
+      // Format journey data
+      averageJourneyTime = formatTime(averageJourneyTime);
+      averageJourneyDistance = (averageJourneyDistance / 1000).toFixed(2);
+
+      setStats({
+        averageJourneyDistance,
+        averageJourneyTime,
+        longestJourneys,
+        mostPopularJourneys,
+        mostPopularStationsForDepartures,
+        leastPopularStationsForDepartures,
+        mostPopularStationsForReturns,
+        leastPopularStationsForReturns,
+      });
     };
 
     fetchData();
   }, []);
-  console.log(stats);
+
   return (
     <div className="mx-auto mt-10 max-w-3xl">
       <div className="mx-auto mt-3 max-w-xl rounded-2xl bg-custom-onyx px-2 py-4 drop-shadow-2xl sm:px-4">
         <div className="rounded-2xl bg-custom-isabelline drop-shadow-2xl">
           <div className="mx-auto px-4 py-4 text-2xl leading-relaxed">
             Under construction...
+            {
+              //tää ei toimi !stats && <Loading />
+            }
             {stats.averageJourneyDistance && (
-              <div>
-                Average distance of journey {stats.averageJourneyDistance} km
-              </div>
+              <>
+                <div>
+                  Average distance of journey {stats.averageJourneyDistance} km
+                </div>
+                <div>Average time of journey {stats.averageJourneyTime}</div>
+              </>
             )}
           </div>
         </div>

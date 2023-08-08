@@ -34,7 +34,10 @@ router.get("/", (req, res) => {
       console.log(journeys);
       res.status(200).json(journeys);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    });
 });
 
 // Get all journeys related to an id (data for statistics in single station view)
@@ -64,7 +67,10 @@ router.get("/related", (req, res) => {
       console.log(journeys);
       res.status(200).json(journeys);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    });
 });
 
 // Get total number of pages with default options
@@ -75,7 +81,10 @@ router.get("/totalPages", (req, res) => {
       totalPages = Math.ceil(totalPages);
       res.status(200).json({ totalPages });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    });
 });
 
 // Get total number of available pages with given options
@@ -98,21 +107,131 @@ router.get("/availablePages", (req, res) => {
       totalPages = Math.ceil(totalPages);
       res.status(200).json({ totalPages });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    });
 });
 
-// Get average distance of all journeys
-router.get("/avgDistance", (req, res) => {
+// Get averages of all journeys
+router.get("/statsAverages", (req, res) => {
   Journey.findAll({
     attributes: [
-      [sequelize.fn("AVG", sequelize.col("covered_distance")), "average"],
+      [
+        sequelize.fn("AVG", sequelize.col("covered_distance")),
+        "averageDistance",
+      ],
+      [sequelize.fn("AVG", sequelize.col("duration")), "averageTime"],
     ],
   })
     .then((data) => {
-      const averageJourneyDistance = Math.round(data[0].dataValues.average);
-      res.status(200).json({ averageJourneyDistance });
+      const averageJourneyDistance = Math.round(
+        data[0].dataValues.averageDistance
+      );
+      const averageJourneyTime = Math.round(data[0].dataValues.averageTime);
+      res.status(200).json({ averageJourneyDistance, averageJourneyTime });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    });
+});
+
+// Get top 5 lists for statistics view
+router.get("/statsLists", async (req, res) => {
+  try {
+    // List of longest journeys made
+    const longestJourneys = await Journey.findAll({
+      attributes: [
+        "id",
+        "departure_station_name",
+        "return_station_name",
+        "covered_distance",
+      ],
+      order: [["covered_distance", "DESC"]],
+      limit: 5,
+    });
+
+    // List of most popular/frequent journeys from station A to station B
+    // Group journeys by departure and return id and name, then count them
+    const mostPopularJourneys = await Journey.findAll({
+      attributes: [
+        "departure_station_id",
+        "departure_station_name",
+        "return_station_id",
+        "return_station_name",
+        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
+      ],
+      group: [
+        "departure_station_id",
+        "departure_station_name",
+        "return_station_id",
+        "return_station_name",
+      ],
+      order: [[sequelize.fn("COUNT", sequelize.col("id")), "DESC"]],
+      limit: 5,
+    });
+
+    // Departures
+
+    const mostPopularStationsForDepartures = await Journey.findAll({
+      attributes: [
+        "departure_station_id",
+        "departure_station_name",
+        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
+      ],
+      group: ["departure_station_id", "departure_station_name"],
+      order: [[sequelize.fn("COUNT", sequelize.col("id")), "DESC"]],
+      limit: 5,
+    });
+
+    const leastPopularStationsForDepartures = await Journey.findAll({
+      attributes: [
+        "departure_station_id",
+        "departure_station_name",
+        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
+      ],
+      group: ["departure_station_id", "departure_station_name"],
+      order: [[sequelize.fn("COUNT", sequelize.col("id")), "ASC"]],
+      limit: 5,
+    });
+
+    // Returns
+
+    const mostPopularStationsForReturns = await Journey.findAll({
+      attributes: [
+        "return_station_id",
+        "return_station_name",
+        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
+      ],
+      group: ["return_station_id", "return_station_name"],
+      order: [[sequelize.fn("COUNT", sequelize.col("id")), "DESC"]],
+      limit: 5,
+    });
+
+    const leastPopularStationsForReturns = await Journey.findAll({
+      attributes: [
+        "return_station_id",
+        "return_station_name",
+        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
+      ],
+      group: ["return_station_id", "return_station_name"],
+      order: [[sequelize.fn("COUNT", sequelize.col("id")), "ASC"]],
+      limit: 5,
+    });
+
+    res.status(200).json({
+      longestJourneys,
+      mostPopularJourneys,
+      mostPopularStationsForDepartures,
+      leastPopularStationsForDepartures,
+      mostPopularStationsForReturns,
+      leastPopularStationsForReturns,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 // Get a single journey
@@ -122,7 +241,10 @@ router.get("/:id", (req, res) => {
       console.log(journey);
       res.status(200).json(journey);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    });
 });
 
 module.exports = router;
