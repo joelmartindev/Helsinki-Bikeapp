@@ -16,7 +16,9 @@ const Map = ({ stations }) => {
   const zoom =
     stations.length > 2
       ? 13 // Explore view
-      : 17; // Single station or single journey view
+      : stations.length == 2
+      ? 12 // Single Journey View
+      : 17; // Single Station View
 
   const UpdateCenter = ({ center }) => {
     const map = useMap();

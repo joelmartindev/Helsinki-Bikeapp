@@ -13,6 +13,7 @@ import SingleJourney from "./components/SingleJourney";
 import StatisticsView from "./components/StatisticsView";
 
 const App = () => {
+  const [stats, setStats] = useState(null);
   const [stations, setStations] = useState(null);
   const [journeys, setJourneys] = useState(null);
 
@@ -58,7 +59,10 @@ const App = () => {
             <Route path="/stations" element={<StationView />} />
             <Route path="/stations/:id" element={<SingleStation />} />
           </Route>
-          <Route path="/statistics" element={<StatisticsView />} />
+          <Route
+            path="/statistics"
+            element={<StatisticsView stats={stats} setStats={setStats} />}
+          />
         </Route>
       </Routes>
     </>

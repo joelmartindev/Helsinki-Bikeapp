@@ -111,7 +111,7 @@ const StationStats = () => {
             </ol>
           </div>
           <div>
-            <h2 className="mt-3 border-l-4 border-pink-300 px-2">
+            <h2 className="mt-4 border-l-4 border-pink-300 px-2">
               Most returns from
             </h2>
             <ol className="list-decimal">
