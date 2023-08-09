@@ -17,9 +17,9 @@ const Home = () => {
         What is it?
       </h2>
       <div className="mt-8 max-w-prose font-mono text-custom-isabelline">
-        A showcase of data from the 2021 season of city bikes in Helsinki done
-        as my first portfolio project. I created it to deepen my knowledge of
-        web technologies and practices.
+        A showcase of data from the 2021 season of city bikes in Helsinki
+        created as my first portfolio project. Its purpose is to deepen my
+        knowledge of web technologies and practices.
       </div>
       <div className="my-3 max-w-prose font-mono text-custom-isabelline">
         Start by choosing a tab from the menu above!

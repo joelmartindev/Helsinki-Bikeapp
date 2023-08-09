@@ -47,8 +47,8 @@ const StatisticsView = ({ stats, setStats }) => {
             <div className="text-xl">
               <div>General statistics for all stations and journeys!</div>
               <div className="mt-2">
-                Note: Some data like the longest journeys are odd, because it is
-                difficult to know which journeys are legitimate.
+                Note: Some data such as the longest journeys is odd, because it
+                is difficult to know which journeys are legitimate.
               </div>
               <div className="mt-2 italic">
                 Departure = Start point of a journey <br /> Return = Endpoint of
