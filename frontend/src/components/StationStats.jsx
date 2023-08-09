@@ -59,7 +59,7 @@ const StationStats = () => {
     } else setDistances(null);
   }, [relatedJourneys]);
 
-  // Labels Week 1 - Week 14
+  // Labels Week 1 of season - Week 14 of season
   const weekLabels = [];
   if (relatedJourneys) {
     for (let i = 1; i <= barData.weeklyDepartures.length; i++) {
@@ -135,24 +135,30 @@ const StationStats = () => {
         </div>
       )}
       {barData && totalJourneys ? (
-        <Bar
-          data={{
-            labels: weekLabels,
-            datasets: [
-              {
-                label: "Departures",
-                data: barData.weeklyDepartures,
-                backgroundColor: "#00B354",
-              },
-              {
-                label: "Returns",
-                data: barData.weeklyReturns,
-                backgroundColor: "rgba(255, 99, 132, 0.5)",
-              },
-            ],
-          }}
-          className="mt-4"
-        />
+        <>
+          <div className="mt-4 font-mono text-lg">
+            Graph shows activity in weeks of season <br /> 01.05.2021 -
+            31.07.2021
+          </div>
+          <Bar
+            data={{
+              labels: weekLabels,
+              datasets: [
+                {
+                  label: "Departures",
+                  data: barData.weeklyDepartures,
+                  backgroundColor: "#00B354",
+                },
+                {
+                  label: "Returns",
+                  data: barData.weeklyReturns,
+                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                },
+              ],
+            }}
+            className="mt-4"
+          />
+        </>
       ) : (
         <Loading className="h-12 w-12" />
       )}

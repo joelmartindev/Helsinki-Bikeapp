@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const sequelize = require("sequelize");
+const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
 const db = require("../utils/dbConfig");
 const { Journey } = require("../models/Journey");
@@ -118,10 +118,10 @@ router.get("/statsAverages", (req, res) => {
   Journey.findAll({
     attributes: [
       [
-        sequelize.fn("AVG", sequelize.col("covered_distance")),
+        Sequelize.fn("AVG", Sequelize.col("covered_distance")),
         "averageDistance",
       ],
-      [sequelize.fn("AVG", sequelize.col("duration")), "averageTime"],
+      [Sequelize.fn("AVG", Sequelize.col("duration")), "averageTime"],
     ],
   })
     .then((data) => {
@@ -160,7 +160,7 @@ router.get("/statsLists", async (req, res) => {
         "departure_station_name",
         "return_station_id",
         "return_station_name",
-        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
+        [Sequelize.fn("COUNT", Sequelize.col("id")), "count"],
       ],
       group: [
         "departure_station_id",
@@ -168,7 +168,7 @@ router.get("/statsLists", async (req, res) => {
         "return_station_id",
         "return_station_name",
       ],
-      order: [[sequelize.fn("COUNT", sequelize.col("id")), "DESC"]],
+      order: [[Sequelize.fn("COUNT", Sequelize.col("id")), "DESC"]],
       limit: 5,
     });
 
@@ -178,10 +178,10 @@ router.get("/statsLists", async (req, res) => {
       attributes: [
         "departure_station_id",
         "departure_station_name",
-        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
+        [Sequelize.fn("COUNT", Sequelize.col("id")), "count"],
       ],
       group: ["departure_station_id", "departure_station_name"],
-      order: [[sequelize.fn("COUNT", sequelize.col("id")), "DESC"]],
+      order: [[Sequelize.fn("COUNT", Sequelize.col("id")), "DESC"]],
       limit: 5,
     });
 
@@ -189,10 +189,10 @@ router.get("/statsLists", async (req, res) => {
       attributes: [
         "departure_station_id",
         "departure_station_name",
-        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
+        [Sequelize.fn("COUNT", Sequelize.col("id")), "count"],
       ],
       group: ["departure_station_id", "departure_station_name"],
-      order: [[sequelize.fn("COUNT", sequelize.col("id")), "ASC"]],
+      order: [[Sequelize.fn("COUNT", Sequelize.col("id")), "ASC"]],
       limit: 5,
     });
 
@@ -202,10 +202,10 @@ router.get("/statsLists", async (req, res) => {
       attributes: [
         "return_station_id",
         "return_station_name",
-        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
+        [Sequelize.fn("COUNT", Sequelize.col("id")), "count"],
       ],
       group: ["return_station_id", "return_station_name"],
-      order: [[sequelize.fn("COUNT", sequelize.col("id")), "DESC"]],
+      order: [[Sequelize.fn("COUNT", Sequelize.col("id")), "DESC"]],
       limit: 5,
     });
 
@@ -213,10 +213,10 @@ router.get("/statsLists", async (req, res) => {
       attributes: [
         "return_station_id",
         "return_station_name",
-        [sequelize.fn("COUNT", sequelize.col("id")), "count"],
+        [Sequelize.fn("COUNT", Sequelize.col("id")), "count"],
       ],
       group: ["return_station_id", "return_station_name"],
-      order: [[sequelize.fn("COUNT", sequelize.col("id")), "ASC"]],
+      order: [[Sequelize.fn("COUNT", Sequelize.col("id")), "ASC"]],
       limit: 5,
     });
 
@@ -232,6 +232,25 @@ router.get("/statsLists", async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
+});
+
+// Get weeks with counts of all journeys in the week
+router.get("/statsJourneysPerWeek", (req, res) => {
+  Journey.findAll({
+    attributes: [
+      [Sequelize.literal("EXTRACT(WEEK FROM departure)"), "week"],
+      [Sequelize.fn("COUNT", Sequelize.col("*")), "count"],
+    ],
+    group: ["week"],
+  })
+    .then((weekcounts) => {
+      console.log(weekcounts);
+      res.status(200).json(weekcounts);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    });
 });
 
 // Get a single journey

@@ -77,6 +77,12 @@ const getStatsLists = async () => {
   return jsonData;
 };
 
+const getJourneysPerWeek = async () => {
+  const response = await fetch(`${baseURL}/api/journeys/statsJourneysPerWeek`);
+  const jsonData = await response.json();
+  return jsonData;
+};
+
 const getAllJourneyStats = async () => {
   const { averageJourneyDistance, averageJourneyTime } =
     await getStatsAverages();
@@ -90,6 +96,8 @@ const getAllJourneyStats = async () => {
     leastPopularStationsForReturns,
   } = await getStatsLists();
 
+  const journeysPerWeek = await getJourneysPerWeek();
+
   return {
     averageJourneyDistance,
     averageJourneyTime,
@@ -99,6 +107,7 @@ const getAllJourneyStats = async () => {
     leastPopularStationsForDepartures,
     mostPopularStationsForReturns,
     leastPopularStationsForReturns,
+    journeysPerWeek,
   };
 };
 

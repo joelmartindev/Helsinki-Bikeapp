@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Bar } from "react-chartjs-2";
 import journeyDB from "../services/journeyDB";
 import { formatTime } from "../utils/journeyUtils";
 import { ReactComponent as Loading } from "../assets/loading.svg";
@@ -17,12 +18,13 @@ const StatisticsView = ({ stats, setStats }) => {
         leastPopularStationsForDepartures,
         mostPopularStationsForReturns,
         leastPopularStationsForReturns,
+        journeysPerWeek,
       } = await journeyDB.getAllJourneyStats();
 
       // Format journey data
       averageJourneyTime = formatTime(averageJourneyTime);
       averageJourneyDistance = (averageJourneyDistance / 1000).toFixed(2);
-
+      console.log(journeysPerWeek);
       setStats({
         averageJourneyDistance,
         averageJourneyTime,
@@ -32,6 +34,7 @@ const StatisticsView = ({ stats, setStats }) => {
         leastPopularStationsForDepartures,
         mostPopularStationsForReturns,
         leastPopularStationsForReturns,
+        journeysPerWeek,
       });
     };
 
@@ -124,6 +127,25 @@ const StatisticsView = ({ stats, setStats }) => {
                       })}
                     </ol>
                   </div>
+                  <div className="mt-8 font-mono text-lg">
+                    Graph shows activity in weeks of season <br /> 01.05.2021 -
+                    31.07.2021 <br /> (Week 17 has only 2 days)
+                  </div>
+                  <Bar
+                    data={{
+                      labels: stats.journeysPerWeek.map(
+                        (data) => "Week " + data.week
+                      ),
+                      datasets: [
+                        {
+                          label: "Journeys made",
+                          data: stats.journeysPerWeek.map((data) => data.count),
+                          backgroundColor: "#00B354",
+                        },
+                      ],
+                    }}
+                    className="mt-4"
+                  />
                   <h2 className="mb-5 mt-5 font-bold text-custom-text underline underline-offset-4">
                     Stations
                   </h2>
