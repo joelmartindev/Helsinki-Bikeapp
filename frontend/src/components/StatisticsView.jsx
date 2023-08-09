@@ -24,7 +24,7 @@ const StatisticsView = ({ stats, setStats }) => {
       // Format journey data
       averageJourneyTime = formatTime(averageJourneyTime);
       averageJourneyDistance = (averageJourneyDistance / 1000).toFixed(2);
-      console.log(journeysPerWeek);
+
       setStats({
         averageJourneyDistance,
         averageJourneyTime,

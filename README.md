@@ -150,6 +150,7 @@ Through iteration, I've experimented with different styles and features for the 
 - Journeys
   - Longest distances
   - Most popular journeys
+  - Graph of journeys per week
 - Stations
   - Most and least popular stations for departures
   - Most and least popular stations for returns
