@@ -13,6 +13,7 @@ df.drop_duplicates(subset=None, inplace=True)
 # Filter out rows with the wrong value or stations that can't be found in the list of stations
 df = df[df["Covered distance (m)"] >= 10]
 df = df[df["Duration (sec.)"] >= 10]
+df = df[df["Duration (sec.)"] < 86400]
 df = df[df["Departure station id"] != 997]
 df = df[df["Return station id"] != 997]
 df = df[df["Departure station id"] != 754]
