@@ -144,6 +144,12 @@ Through iteration, I've experimented with different styles and features for the 
 
 ### Statistics View
 
-- Under construction...
-- Average distance of all journeys
-- Average duration of all journeys
+- Averages
+  - Average distance of all journeys
+  - Average duration of all journeys
+- Journeys
+  - Longest distances
+  - Most popular journeys
+- Stations
+  - Most and least popular stations for departures
+  - Most and least popular stations for returns
