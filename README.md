@@ -33,6 +33,11 @@ Backend:
 - PostgreSQL
 - Sequelize (\*)
 
+Preparing data:
+
+- Python
+  - Pandas
+
 It's possible that I'll return to this project later on to practise making tests with Jest for example.
 
 ## Data
@@ -62,15 +67,31 @@ ID,Name_FI,Name_SE,Name_EN,Address_FI,Address_SE,City_FI,City_SE,Operator,Capaci
 501,Hanasaari,Hanaholmen,Hanasaari,Hanasaarenranta 1,Hanaholmsstranden 1,Espoo,Esbo,CityBike Finland,10,24.840319,60.16582
 ```
 
-I noticed that the data had errors in it for some reason so I created a Python script to sort the data and remove duplicates among other things. The script is in the root of the project.
+I noticed that the data had errors in it for some reason so I created a Python script in the root of the project. Any typos in data remain there, such as the missing end in station name: "Aalto-yliopisto (M), Tietot".
+
+Data filtered out includes journeys that are:
+
+- Under 10 seconds
+- Shorter than 10 meters
+- Including data from stations that can't be found
+- 24 hours or longer, which is counted as a missing bike
+- Duplicates
 
 The ready data was then moved to a PostgreSQL server online hosted by [Neon](https://neon.tech/). Thank you Neon!
 
-While coding the website I went with the approach that assumed the data to be able to change at some point, even if in the end I didn't add an option for creating new data. This means all statistics data must be calculated everytime and is also calculated client side to keep the backend fast.
+While coding the website I treated the data as if it would to be able to change at some point, even if in the end I didn't add an option for creating new data.
 
 ## Features
 
 Through iteration, I've experimented with different styles and features for the project. I've changed the UI based on observing how users use it. For example: I made some links more apparent, because the user didn't seem to realize it was a link. I changed from a table style presentation of journeys and stations to a card based style. I added statistics for least popular stations and the results seemed to always have a list of ones, which is not interesting data so I removed it.
+
+### Menu
+
+- Responsive
+  - Logo and buttons move closer until unable
+  - Menu button replaces tab buttons on mobile screen sizes
+    - Clicking the menu button shows hidden buttons in a column
+  - Tab buttons are underlined when their page is active
 
 ### Explore View
 
@@ -125,3 +146,4 @@ Through iteration, I've experimented with different styles and features for the 
 
 - Under construction...
 - Average distance of all journeys
+- Average duration of all journeys
