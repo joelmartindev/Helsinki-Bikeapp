@@ -40,6 +40,47 @@ Preparing data:
 
 It's possible that I'll return to this project later on to practise making tests with Jest for example.
 
+## Data
+
+The journey data, owned by City Bike Finland, is divided into 3 csv files.
+
+- https://dev.hsl.fi/citybikes/od-trips-2021/2021-05.csv
+- https://dev.hsl.fi/citybikes/od-trips-2021/2021-06.csv
+- https://dev.hsl.fi/citybikes/od-trips-2021/2021-07.csv
+
+A row of the data along with the labels looks like this:
+
+```
+Departure,Return,Departure station id,Departure station name,Return station id,Return station name,Covered distance (m),Duration (sec.)
+2021-05-31T23:57:25,2021-06-01T00:05:46,94,Laajalahden aukio,100,Teljäntie,2043,500
+```
+
+Also, there is a dataset that has information about Helsinki Region Transport’s (HSL) city bicycle stations.
+
+- Dataset: https://opendata.arcgis.com/datasets/726277c507ef4914b0aec3cbcfcbfafc_0.csv
+- License and information: https://www.avoindata.fi/data/en/dataset/hsl-n-kaupunkipyoraasemat/resource/a23eef3a-cc40-4608-8aa2-c730d17e8902
+
+A row of the data along with the labels looks like this:
+
+```
+ID,Name_FI,Name_SE,Name_EN,Address_FI,Address_SE,City_FI,City_SE,Operator,Capacity,Coord_x,Coord_y
+501,Hanasaari,Hanaholmen,Hanasaari,Hanasaarenranta 1,Hanaholmsstranden 1,Espoo,Esbo,CityBike Finland,10,24.840319,60.16582
+```
+
+I noticed that the data had errors in it for some reason so I created a Python script in the root of the project. Any typos in data remain there, such as the missing end in station name: "Aalto-yliopisto (M), Tietot".
+
+Data filtered out includes journeys that are:
+
+- Under 10 seconds
+- Shorter than 10 meters
+- Including data from stations that can't be found
+- 24 hours or longer, which is counted as a missing bike
+- Duplicates
+
+The ready data was then moved to a PostgreSQL server online hosted by [Neon](https://neon.tech/). Thank you Neon!
+
+While coding the website I treated the data as if it would to be able to change at some point, even if in the end I didn't add an option for creating new data.
+
 ## Setup
 
 To clone and run this application locally, you need Git and Node.js (which comes with npm) installed on your computer. You will also need a PostgreSQL database and optionally Python if you want to use the data editing script.
@@ -57,7 +98,7 @@ cd path/to/repository
 npm install
 ```
 
-Then go to the frontend and backend servers respectively and install dependencies there as well.
+Then go to the frontend and backend folders respectively and install dependencies there as well.
 
 If you want to use the data editing Python script, open it and change the path to point to your downloaded journey csv file and the path of the newly created file.
 
@@ -149,47 +190,6 @@ npm run dev
 ```
 
 You should now have a backend and frontend server running. The website should be visible at http://localhost:5173/
-
-## Data
-
-The journey data, owned by City Bike Finland, is divided into 3 csv files.
-
-- https://dev.hsl.fi/citybikes/od-trips-2021/2021-05.csv
-- https://dev.hsl.fi/citybikes/od-trips-2021/2021-06.csv
-- https://dev.hsl.fi/citybikes/od-trips-2021/2021-07.csv
-
-A row of the data along with the labels looks like this:
-
-```
-Departure,Return,Departure station id,Departure station name,Return station id,Return station name,Covered distance (m),Duration (sec.)
-2021-05-31T23:57:25,2021-06-01T00:05:46,94,Laajalahden aukio,100,Teljäntie,2043,500
-```
-
-Also, there is a dataset that has information about Helsinki Region Transport’s (HSL) city bicycle stations.
-
-- Dataset: https://opendata.arcgis.com/datasets/726277c507ef4914b0aec3cbcfcbfafc_0.csv
-- License and information: https://www.avoindata.fi/data/en/dataset/hsl-n-kaupunkipyoraasemat/resource/a23eef3a-cc40-4608-8aa2-c730d17e8902
-
-A row of the data along with the labels looks like this:
-
-```
-ID,Name_FI,Name_SE,Name_EN,Address_FI,Address_SE,City_FI,City_SE,Operator,Capacity,Coord_x,Coord_y
-501,Hanasaari,Hanaholmen,Hanasaari,Hanasaarenranta 1,Hanaholmsstranden 1,Espoo,Esbo,CityBike Finland,10,24.840319,60.16582
-```
-
-I noticed that the data had errors in it for some reason so I created a Python script in the root of the project. Any typos in data remain there, such as the missing end in station name: "Aalto-yliopisto (M), Tietot".
-
-Data filtered out includes journeys that are:
-
-- Under 10 seconds
-- Shorter than 10 meters
-- Including data from stations that can't be found
-- 24 hours or longer, which is counted as a missing bike
-- Duplicates
-
-The ready data was then moved to a PostgreSQL server online hosted by [Neon](https://neon.tech/). Thank you Neon!
-
-While coding the website I treated the data as if it would to be able to change at some point, even if in the end I didn't add an option for creating new data.
 
 ## Features
 
