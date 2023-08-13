@@ -183,7 +183,7 @@ Launch a new command line and run:
 
 ```
 # In the root of the project, go to frontend folder
-cd backend
+cd frontend
 
 # Run the dev script that will launch the Vite developer server
 npm run dev
