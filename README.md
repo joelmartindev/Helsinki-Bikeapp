@@ -40,6 +40,116 @@ Preparing data:
 
 It's possible that I'll return to this project later on to practise making tests with Jest for example.
 
+## Setup
+
+To clone and run this application locally, you need Git and Node.js (which comes with npm) installed on your computer. You will also need a PostgreSQL database and optionally Python if you want to use the data editing script.
+
+From your command line, run:
+
+```
+# Clone this repository
+git clone https://github.com/joelmartindev/Helsinki-Bikeapp
+
+# Go into the repository root
+cd path/to/repository
+
+# Install dependencies
+npm install
+```
+
+Then go to the frontend and backend servers respectively and install dependencies there as well.
+
+If you want to use the data editing Python script, open it and change the path to point to your downloaded journey csv file and the path of the newly created file.
+
+On the command line go to root and run the script:
+
+```
+# The command needed might differ based on your installed Python version.
+python3 dataEdit.py
+```
+
+Repeat for all journey csv files and don't forget to change the paths!
+
+At this point install PostgreSQL or register on a website that offers hosted databases.
+
+Create a database and a schema called bikeapp. Run the following SQL querys:
+
+```
+CREATE TABLE bikeapp.journeys (
+id SERIAL PRIMARY KEY,
+departure VARCHAR,
+return VARCHAR,
+departure_station_id INTEGER,
+departure_station_name VARCHAR,
+return_station_id INTEGER,
+return_station_name VARCHAR,
+covered_distance NUMERIC,
+duration INTEGER
+);
+
+CREATE TABLE bikeapp.stations (
+id SERIAL PRIMARY KEY,
+name_fi VARCHAR,
+name_se VARCHAR,
+name_en VARCHAR,
+address_fi VARCHAR,
+address_se VARCHAR,
+operator VARCHAR,
+city_se VARCHAR,
+capacity VARCHAR,
+coord_x VARCHAR,
+coord_y VARCHAR
+);
+```
+
+Run the following PSQL commands or use other means of importing:
+
+```
+\COPY bikeapp.stations FROM 'path\to\data\bike_stations.csv' WITH (FORMAT CSV, HEADER, ENCODING 'UTF8');
+
+\COPY bikeapp.journeys (departure, return, departure_station_id, departure_station_name, return_station_id, return_station_name, covered_distance, duration) FROM 'C:\Users\Parru\Desktop\Solita Dev Academy 2023\data\2021-05uusi.csv' WITH (FORMAT CSV, HEADER, ENCODING 'UTF8');
+```
+
+Now create a new file called .env to the root of the frontend and the backend folders.
+
+To the frontend .env, add:
+
+```
+# Used in services
+VITE_BASE_URL = 'http://localhost:3001'
+```
+
+To the backend .env, add:
+
+```
+# Used by Sequelize
+DATABASE_URL = "URL address of your databases"
+DB_USER = "username of your database"
+DB_PASS = "password of your database"
+```
+
+Now from your command line, run:
+
+```
+# In the root of the project, go to backend folder
+cd backend
+
+# Run the dev script that will launch the server
+npm run dev
+```
+
+Launch a new command line and run:
+
+```
+# In the root of the project, go to frontend folder
+cd backend
+
+# Run the dev script that will launch the Vite developer server
+npm run dev
+```
+
+You should now have a backend and frontend server running. The website should be visible at http://localhost:5173/
+
 ## Data
 
 The journey data, owned by City Bike Finland, is divided into 3 csv files.
