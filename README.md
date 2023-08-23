@@ -3,9 +3,17 @@
 City bikes as data!
 
 The goal of this project was to create both a frontend and a backend for a website and deploy it online as my first portfolio project. The website uses public data from the 2021 season of city bikes in Helsinki. It displays the various journeys, stations and statistics calculated based on the data.
-The inspiration for it came from the [Solita Dev Academy Pre-assignment](https://github.com/solita/dev-academy-2023-exercise) where the data was provided along with some basic feature requests. They gave applicants free hands to choose their technology stack, so I chose to gain more experience with React, Node.js, Express and PostgreSQL.
+The inspiration for it came from the [Solita Dev Academy Pre-assignment](https://github.com/solita/dev-academy-2023-exercise) where the data was provided along with some basic feature requests. They gave applicants the freedom to choose their tech stack, so I chose to gain more experience with React, Node.js, Express and PostgreSQL.
 
 The website is deployed at https://helsinkibikeapp.fly.dev/
+
+## Table of Contents
+
+- [Technologies used](#technologies-used)
+- [Screenshots](#screenshots)
+- [Data](#data)
+- [Setup](#setup)
+- [Features](#features)
 
 ## Technologies used
 
@@ -39,6 +47,31 @@ Preparing data:
   - Pandas
 
 It's possible that I'll return to this project later on to practise making tests with Jest for example.
+
+## Screenshots
+
+### Home screen, bike is animated with CSS
+![image](https://github.com/joelmartindev/Helsinki-Bikeapp/assets/113009105/4a601fbd-bd21-42bc-95c4-27e36e21eb04)
+
+### Explore View with all stations
+![image](https://github.com/joelmartindev/Helsinki-Bikeapp/assets/113009105/1396627f-a2c3-4d82-9bf8-a204a93592ac)
+
+### Journeys View shows all journeys, but here I'm searching with "Yliopisto"
+![image](https://github.com/joelmartindev/Helsinki-Bikeapp/assets/113009105/cd703ca8-ada7-467e-a6b7-e9e4f4194464)
+
+### Single Journey View shows detailed information about a journey
+![image](https://github.com/joelmartindev/Helsinki-Bikeapp/assets/113009105/581ba082-4054-4c0d-8e37-ef4028a16a1b)
+
+### Stations View shows all stations
+![image](https://github.com/joelmartindev/Helsinki-Bikeapp/assets/113009105/dcd87b49-df4e-48cb-906b-dbe3dd041c9c)
+
+### Single Station View shows detailed information about a station
+![image](https://github.com/joelmartindev/Helsinki-Bikeapp/assets/113009105/2039116a-16db-482b-8af6-59a66ce9bb44)
+
+### Statistics View
+![image](https://github.com/joelmartindev/Helsinki-Bikeapp/assets/113009105/d24baf61-3474-46ff-a9f6-d1ec44477895)
+
+
 
 ## Data
 
